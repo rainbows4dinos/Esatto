@@ -1,2 +1,5 @@
 .DS_Store
 *.zip
+
+# Local working docs
+docs/
