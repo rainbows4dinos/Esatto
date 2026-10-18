@@ -21,6 +21,34 @@ inspection  →  exploration  →  construction
 
 `lr-design-exploration` refers to the other two by name and falls back to the same principles when they aren't installed.
 
+## Exploration intensity
+
+`lr-design-exploration` controls how far each direction departs from the current experience:
+
+| Intensity | What it explores |
+|---|---|
+| **1 — Refine** | Hierarchy, typography, spacing, density and component usability while preserving existing workflows, information architecture and interaction patterns. |
+| **2 — Rethink** | Alternative layouts, navigation, information architecture and interaction patterns while preserving core functionality and user goals. |
+| **3 — Reinvent** | Fundamentally different concepts and workflows while preserving underlying user needs, product goals and explicit requirements. Speculative functionality is labeled. |
+
+**Mixed is the default.** For five directions, it produces **2 Refine, 2 Rethink and 1 Reinvent**. The skill normally produces two or three directions unless you request another count: two uses one Refine and one Rethink; three uses one of each. Other counts approximate the 2:2:1 balance while keeping a useful range.
+
+Specify a single level for all directions, choose Mixed, or assign a level to each direction:
+
+```text
+Explore five directions with intensity: 1
+Explore five directions with intensity: 2
+Explore five directions with intensity: 3
+Explore five directions with intensity: mixed
+Explore directions with intensity: [1, 1, 2, 2, 3]
+```
+
+A custom list assigns levels in order and sets the direction count unless you separately specify it. Conflicting counts or invalid levels are resolved before generating artifacts.
+
+Natural-language overrides work too: “keep it close” selects Refine, “explore some alternatives” selects Rethink, “push the boundaries” selects Reinvent, and “give me a range” selects Mixed. Your explicit choices take precedence over defaults.
+
+Each direction has a distinct, testable hypothesis and a meaningful user-facing difference, including directions at the same level. Each presents its intensity, rationale, expected benefit, tradeoffs and implementation cost, explaining what stays faithful and what changes. Different intensity labels or cosmetic changes alone do not establish diversity.
+
 ## What's inside
 
 Each skill is a folder with a `SKILL.md` and supporting references that Claude reads when relevant:
