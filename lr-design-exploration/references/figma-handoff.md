@@ -1,0 +1,34 @@
+# Editable Figma handoff
+
+Use this for a build-ready specification and, when construction is authorized, acceptance checks. Keep unselected directions clearly labeled as alternatives.
+
+## Provenance and destination
+
+Record brief, source links/node IDs and version/date, inspection baseline, direction status (proposed/recommended/selected), target file/page or requested new destination, frame sizes, states and modes. Protect original frames and library assets. If a destination or selection is necessary but unknown, prepare the specification and ask for that missing decision before dependent writes.
+
+## Structure and mappings
+
+Specify:
+
+- Frame/layer hierarchy with meaningful names; sections and semantic reading order.
+- Auto-layout direction, nesting, padding, gap, alignment, wrapping; hug/fill/fixed sizing by axis and min/max rules where relevant.
+- Overlays or absolute children with reasons; clipping, scroll behavior, long-copy and narrow-width behavior.
+- Existing component/set IDs or keys, exact variants, instance properties, nested swaps and permitted overrides. Preserve instance links instead of detaching for convenience.
+- Variable/style IDs and names, semantic role, collection and effective modes, alias dependencies and binding targets. Do not translate a bound token into a raw literal accidentally.
+- Intentional exploratory literals and proposed extensions, marked as provisional. New tokens/styles/library changes require their own authorization.
+- Editable text, exact required copy, font availability, icons/assets and provenance. Preserve original imagery rather than silently substituting generated assets.
+- Flow transitions, component states and required empty/loading/error/disabled/focus cases; distinguish Figma prototype behavior from implementation requirements.
+
+A mapping table is useful:
+
+| Visual/behavior element | Existing asset + properties | Layout/binding | Gap or proposed extension |
+| --- | --- | --- | --- |
+
+## Verification and acceptance
+
+For an actual Figma artifact, check both:
+
+1. **Visual and behavioral fidelity:** compare rendered frames with the selected concept at matching viewport, data, state and mode. Check content, hierarchy, spacing, typography, wrapping, imagery and intended flow. Document deviations and their reasons.
+2. **Native editability:** inspect layer types, editable text, component links/properties, variable/style bindings, layout sizing and meaningful hierarchy. Inspect or exercise relevant size/content/mode changes only in authorized working copies. Imported screenshots, flattened vectors of text, or a single raster-filled frame do not pass.
+
+List verified frame/node links and checks actually performed, unresolved gaps, implementation notes and any proposed changes needing a decision. When only handing off a specification, phrase checks as acceptance criteria, not completed verification. Do not claim responsive or accessible implementation solely from a static Figma view.
