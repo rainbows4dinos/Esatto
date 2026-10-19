@@ -68,7 +68,19 @@ For each direction, use the referenced direction card and include its intensity 
 
 ## Make and evaluate artifacts
 
-Deliver the requested fidelity: flow sketches, wireframes, screen concepts or prototypes, plus the reasoning required to assess them. Use realistic supplied content and comparable edge states. Preserve original sources; create alternatives only in an authorized separate destination. Do not overwrite production designs or modify shared components, variables, styles or published libraries as a side effect of exploration.
+Deliver the requested fidelity with the reasoning needed to assess it. Support `fidelity: sketch` (flows and wireframes), `fidelity: static` (rendered screen concepts), and `fidelity: prototype`. **`prototype` is the default** whenever the environment can publish or render interactive HTML; otherwise fall back to `static` and say so. Interpret natural language: “quick sketches” or “wireframes” means `sketch`; “mockups” or “static” means `static`; “interactive”, “clickable” or “prototype” means `prototype`.
+
+A prototype deliverable is one interactive comparison artifact:
+
+- A direction switcher (tabs, plus number keys), with the baseline included as a control when one exists.
+- Each direction as a working prototype over the same shared data and state, so filters and changes persist when switching. The source's primary interactions actually work: for example filtering, sorting, selecting, adding, moving or reordering items, expanding and collapsing, and opening details. Simulate only what would need a backend, and label it.
+- States produced by real interaction (hover, focus, drag, selected, empty) rather than mocked with static classes.
+- Mode and viewport toggles when the source has them (such as light/dark or desktop/phone), and a fit-to-screen versus actual-size control for fixed-size frames.
+- The active direction's card beside or below the prototype, followed by the comparison, recommendation, and handoff.
+
+Prototype controls need keyboard access and visible focus. Screenshots may support the brief but do not replace a working direction.
+
+Use realistic supplied content and comparable edge states. Preserve original sources; create alternatives only in an authorized separate destination. Do not overwrite production designs or modify shared components, variables, styles or published libraries as a side effect of exploration.
 
 Reuse existing assets by identity when feasible. Label proposed extensions and exploratory raw values; do not promote them into new system tokens/styles without authorization.
 
@@ -82,4 +94,4 @@ Read [figma-handoff.md](references/figma-handoff.md) before handing off a select
 
 If Figma writing is already within the user's request, proceed within that scope and use the available construction guidance. Otherwise deliver the ready-to-build handoff without mutating Figma. If tooling cannot create or verify editable layers, state that limitation and deliver the spec/assets; never claim that a raster mockup or unverified import is complete editable Figma.
 
-Before finishing, verify the requested intensity distribution and focus, each direction's lead layer, distinct hypotheses and meaningful differences within the allowed levels and layers, source fidelity, current constraints, fair comparison, explicit uncertainty, and a usable handoff. Separate visual fidelity checks from structural editability checks.
+Before finishing, verify the requested intensity distribution, focus and fidelity (at `prototype`, that each direction's primary interactions work), each direction's lead layer, distinct hypotheses and meaningful differences within the allowed levels and layers, source fidelity, current constraints, fair comparison, explicit uncertainty, and a usable handoff. Separate visual fidelity checks from structural editability checks.

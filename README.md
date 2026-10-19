@@ -78,6 +78,21 @@ When `visual` is in focus, a coherent new visual language counts as a meaningful
 
 Natural language works here too: “make it look different” or “restyle” selects `visual`, “different layouts” selects `ui`, “rethink the flow” selects `ux`, and “rebrand” adds `brand`.
 
+## Output fidelity
+
+By default, `lr-design-exploration` delivers one interactive comparison artifact. You can switch between directions (and the baseline), each direction works on the same shared data, and the source's main interactions function: filters, drag and drop, expand and collapse, light and dark mode where the source has them.
+
+| Fidelity | Output |
+|---|---|
+| `sketch` | Flows and wireframes |
+| `static` | Rendered screen concepts |
+| `prototype` | Working interactive prototypes in one comparison artifact. **The default.** |
+
+```text
+Explore three directions, focus: visual, fidelity: static
+Give me quick wireframes for three directions
+```
+
 ## Usage recipes
 
 Name a skill directly ("Use lr-design-exploration to…"), run it as a slash command in Claude Code (`/lr-design-exploration`), or describe the task and let it trigger. Settings can go anywhere in the prompt.
