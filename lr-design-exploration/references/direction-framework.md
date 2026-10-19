@@ -34,6 +34,7 @@ A difference is substantive if a user would notice a change in how they find, un
 
 - **Name and organizing idea:** describe the mechanism, not just a mood.
 - **Intensity and lead layer:** the level, the layer the hypothesis is mainly about, and any incidental changes to other layers.
+- **Lineage (seeded rounds):** the chain from the original through the seed, the seed traits preserved, and what this direction changes relative to the seed.
 - **Hypothesis:** For [audience/context], [change] will improve [observable task outcome] because [mechanism]. For a visual lead: For [audience/context], [visual change] will make [perception, hierarchy, or legibility outcome] better because [mechanism].
 - **Evidence and rationale:** source observations; separate assumptions and analogies.
 - **Composition/flow:** primary action, content hierarchy, navigation, disclosure, key states.

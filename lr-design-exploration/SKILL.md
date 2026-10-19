@@ -56,6 +56,19 @@ Interpret natural language: “make it look different”, “new visual directio
 
 State the chosen count, intensity distribution, focus, and each direction's lead layer before generating designs.
 
+## Iterate from a seed
+
+A seed makes a previous direction the baseline for a new round. Accept `seed: <direction>` with a link to or mention of the earlier exploration, or natural language such as “start from D” or “take Fields further”. `seed: [C, D]` combines two directions.
+
+- **Seed contract.** Before generating, list the traits that define the seed (its organizing idea, layout paradigm, signature visual moves, and key interactions) and preserve them by default. The user's note says what should change. Honor `keep:` and `change:` when given; otherwise infer them from the note and state the inference.
+- **Inherited contract.** The original brief and source contract still apply. A seed cannot loosen a requirement fixed in an earlier round.
+- **Relative settings.** Intensity and focus measure departure from the seed, not from the original. Infer focus from the note where it is clear (“hard-edge style” means `visual`; “simplify the flow” means `ux`).
+- **Narrowing defaults.** Seeding usually means narrowing down, so default to three directions at `intensity: [1, 2, 2]`. Explicit settings override this.
+- **Distinct readings.** Each direction interprets the note differently through a distinct mechanism, not as parameter steps of one idea (for example, three corner-radius values are one direction, not three).
+- **Combinations.** For a combined seed, name which traits come from each parent, resolve conflicts explicitly, and reassess the result rather than assuming both parents' benefits survive.
+- **Lineage.** Name directions after the seed (D1, D2, D3), record the chain (original → seed → direction) on each direction card, and show it in the artifact. In a prototype, the seed is the control tab, and the original baseline stays available as a second control.
+- **Reuse.** Start from the seed's prototype code and shared data when available, so interactions and data carry over instead of being rebuilt from a description. If the seed is not accessible, ask for it or reconstruct it from its direction card and say so.
+
 ## Choose meaningful exploration axes
 
 Read [direction-framework.md](references/direction-framework.md) when forming or evaluating directions. Choose axes within each direction’s intensity and focus: hierarchy, readability, spacing, density, and component usability for Refine; information architecture, task sequence, interaction model, or progressive disclosure where Rethink or Reinvent permits them and `ux` is in focus; typographic voice, color strategy, density and rhythm, shape language, imagery, and motion when `visual` is in focus.

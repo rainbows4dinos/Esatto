@@ -78,6 +78,27 @@ When `visual` is in focus, a coherent new visual language counts as a meaningful
 
 Natural language works here too: “make it look different” or “restyle” selects `visual`, “different layouts” selects `ui`, “rethink the flow” selects `ux`, and “rebrand” adds `brand`.
 
+## Iterating from a seed
+
+When one direction stands out, make it the seed for the next round. The seed becomes the new baseline: its defining traits are kept, your note says what to change, and intensity and focus are measured from the seed instead of the original design.
+
+```text
+seed: D (artifact link). Explore three directions with a hard-edge style.
+seed: D, keep: color fields and big counts, change: shape language
+Start from direction B and simplify the flow, focus: ux
+seed: [C, D]. Combine C's typography with D's color fields.
+```
+
+How a seeded round works:
+
+- **Point to the seed.** Link the earlier exploration and name the direction, or say "start from D" in the same conversation. If the seed can't be opened, the skill asks for it or rebuilds it from its direction card and says so.
+- **Seed contract.** The skill lists the traits that define the seed and keeps them by default. Use `keep:` and `change:` to be explicit; otherwise it infers them from your note and tells you what it inferred.
+- **Original contract still applies.** Anything fixed in an earlier round, such as required content or navigation, stays fixed. A seed can't loosen it.
+- **Narrower defaults.** Seeded rounds default to three directions at `intensity: [1, 2, 2]`, with focus inferred from your note ("hard-edge style" selects `visual`). Explicit settings override this.
+- **Different readings.** Each direction interprets your note through a different mechanism, not as small steps of one idea.
+- **Combining.** `seed: [C, D]` names which traits come from each direction, resolves conflicts, and reassesses the result.
+- **Lineage.** Directions are named after the seed (D1, D2, D3) and each records its chain (original → D → D2). In the prototype, the seed is the control tab and the original design stays available. The seed's prototype code is reused, so data and interactions carry over.
+
 ## Output fidelity
 
 By default, `lr-design-exploration` delivers one interactive comparison artifact. You can switch between directions (and the baseline), each direction works on the same shared data, and the source's main interactions function: filters, drag and drop, expand and collapse, light and dark mode where the source has them.
@@ -123,6 +144,12 @@ We ship this week, so no flow changes.
 ```text
 Users lose track of stalled requests. Explore three directions,
 intensity: 2, focus: ux. Keep the visual design as is.
+```
+
+**Take a favorite further.**
+
+```text
+seed: D (artifact link). Explore three directions with a hard-edge style.
 ```
 
 **A specific spread of directions.**
