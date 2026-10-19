@@ -24,6 +24,14 @@ A mapping table is useful:
 | Visual/behavior element | Existing asset + properties | Layout/binding | Gap or proposed extension |
 | --- | --- | --- | --- |
 
+## Build manifest
+
+Give construction a checklist instead of leaving it to rebuild one from the prototype:
+
+- **Frames:** every direction × viewport × mode the prototype supports, marked required or optional, plus states worth drawing (hover, dragging, empty, expanded).
+- **Signature details:** for each direction, the distinctive treatments that make it that direction, such as restyled controls, connectors, numerals, shadows and color fields. Note which existing components cannot produce them as configured.
+- **References:** screenshots of the prototype for each required frame, in the matching state, viewport and mode, so every built frame has something to be compared against.
+
 ## Verification and acceptance
 
 For an actual Figma artifact, check both:
