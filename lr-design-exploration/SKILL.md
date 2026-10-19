@@ -1,6 +1,6 @@
 ---
 name: lr-design-exploration
-description: Develop substantively different product design directions with explicit hypotheses, rationale, tradeoffs, and evaluation criteria. Use to explore UI or interaction alternatives while preserving source intent and current system constraints, then prepare an editable Figma handoff.
+description: Develop substantively different product design directions with explicit hypotheses, rationale, tradeoffs, and evaluation criteria. Use to explore product, UX, UI, or visual design alternatives at a chosen intensity while preserving source intent and current system constraints, then prepare an editable Figma handoff.
 ---
 
 # Design Exploration
@@ -23,27 +23,56 @@ Intensity controls how far a direction may depart from the existing experience. 
 | --- | --- | --- |
 | **1 — Refine** | Existing workflows, information architecture, and interaction patterns. | Visual hierarchy, typography, spacing, density, component treatments, and usability within that structure. |
 | **2 — Rethink** | Core product functionality and user goals. | Alternative layouts, information architecture, navigation, content priorities, task sequences, and interaction patterns. |
-| **3 — Reinvent** | Underlying user needs, product goals, and explicit requirements. | Fundamentally different concepts, workflows, and interface paradigms. Clearly label speculative functionality and dependencies. |
+| **3 — Reinvent** | Underlying user needs, product goals, and explicit requirements. | Fundamentally different concepts, workflows, interface paradigms, or visual languages. Clearly label speculative functionality and dependencies. |
+
+Each level applies only within the layers selected by focus (next section). For example, Reinvent with `focus: visual` means a fundamentally different visual language on the preserved structure.
 
 **Mixed is the default.** For five directions, use two Refine, two Rethink, and one Reinvent. For other counts, approximate the 2:2:1 balance while retaining a useful range: for three, use one of each; for two, use one Refine and one Rethink. Do not add directions merely to fill every level.
 
 Support `intensity: 1`, `intensity: 2`, or `intensity: 3` to apply a single level to every direction; `intensity: mixed` selects the default mix. A custom list such as `intensity: [1, 1, 2, 2, 3]` assigns one level per direction and sets the count unless the user separately specifies it. Resolve a conflicting count or invalid level before generating dependent artifacts.
 
-Honor natural-language overrides: “keep it close” means Refine; “explore some alternatives” means Rethink; “push the boundaries” means Reinvent; “give me a range” means Mixed. Explicit user choices take precedence over defaults; use context to interpret phrasing and clarify only consequential conflicts. State the chosen count and intensity distribution before generating designs.
+Honor natural-language overrides: “keep it close” means Refine; “explore some alternatives” means Rethink; “push the boundaries” means Reinvent; “give me a range” means Mixed. Explicit user choices take precedence over defaults; use context to interpret phrasing and clarify only consequential conflicts.
+
+## Set exploration focus
+
+Focus controls which layers of the design a direction may change. Intensity sets how far a direction departs; focus sets where.
+
+| Focus | May change | Hypotheses usually address |
+| --- | --- | --- |
+| `product` | Scope, features, and what the product does for the user. | Value delivered and whether the user's goal is met. |
+| `ux` | Task flow, information architecture, navigation, and interaction model. | Task effort, findability, and comprehension. |
+| `ui` | Layout, component choice, density, controls, and states. | Scanning, efficiency, and clarity of the screen. |
+| `visual` | Typography, color strategy, spacing rhythm, shape language, imagery, iconography, motion, and overall tone. | Perceived character, visual hierarchy, legibility, and emotional fit. |
+| `brand` | Identity: logo treatment, signature palette and typefaces, and voice. | Recognition and positioning. |
+| `all` | `product`, `ux`, `ui`, and `visual`. Not `brand`. | Any of the above. |
+
+**`all` is the default.** Accept one value or a list, such as `focus: [ui, visual]`. Layers outside the focus stay at the baseline except for incidental changes a focused change needs to work; label those.
+
+`brand` is opt-in only, through `focus: brand`, a list that includes it, or an explicit request to rethink the brand. Otherwise brand assets stay in the source contract. `visual` may still take real risks with them, such as their scale, proportion, emphasis, placement, and supporting colors and type, but does not replace the logo, signature palette, or brand typefaces.
+
+Give each direction a lead layer, the one its hypothesis is mainly about. With `all` and three or more directions, at least one direction leads with `visual`, and directions should not all lead with the same layer unless the user asks. This keeps the default from drifting toward UX-only alternatives.
+
+Interpret natural language: “make it look different”, “new visual direction”, or “restyle” means `visual`; “different layouts” means `ui`; “rethink the flow” means `ux`; “what should this feature do” means `product`; “rebrand” includes `brand`.
+
+State the chosen count, intensity distribution, focus, and each direction's lead layer before generating designs.
 
 ## Choose meaningful exploration axes
 
-Read [direction-framework.md](references/direction-framework.md) when forming or evaluating directions. Choose axes within each direction’s intensity: hierarchy, readability, spacing, density, and component usability for Refine; information architecture, task sequence, interaction model, or progressive disclosure where Rethink or Reinvent permits them. Color/font/radius changes alone are styling variants unless visual style itself is the requested question. Refine directions must still produce meaningfully different task comprehension or usability hypotheses without changing the preserved structure.
+Read [direction-framework.md](references/direction-framework.md) when forming or evaluating directions. Choose axes within each direction’s intensity and focus: hierarchy, readability, spacing, density, and component usability for Refine; information architecture, task sequence, interaction model, or progressive disclosure where Rethink or Reinvent permits them and `ux` is in focus; typographic voice, color strategy, density and rhythm, shape language, imagery, and motion when `visual` is in focus.
+
+When `visual` is in focus, a coherent change of visual language is a substantive difference. It must be a deliberate system applied across the screen with its own hypothesis, not a palette swap or scattered tweaks. When `visual` is not in focus, color, font, and radius changes alone are cosmetic and do not establish diversity. Refine directions must still produce meaningfully different hypotheses (usability, comprehension, or, with `visual` in focus, perception) without changing the preserved structure.
 
 Choose enough directions to expose the useful trade space, normally two or three unless the user specifies otherwise. Before making artifacts, give each direction a distinct, testable hypothesis and identify how its mechanism and expected user-facing benefit differ from the others, including directions at the same intensity. Each must offer a credible drawback. Intensity measures departure from the baseline; diversity measures differences between directions, so level labels alone do not establish diversity. Keep task, content, representative data, viewport, states and fidelity consistent enough for fair comparison. Do not manufacture a weak alternative to justify a preferred one.
 
-For each direction, use the referenced direction card and include its intensity name/number and why its departures fit that level, alongside its hypothesis, mechanism, evidence-based rationale, expected benefit, tradeoffs, failure conditions, system reuse, departures and cost. Explain what stays faithful and what changes; present these fields consistently so directions can be compared. Distinguish predicted improvements from demonstrated results; do not invent user research or claim an untested metric gain.
+For each direction, use the referenced direction card and include its intensity name/number, lead layer, and why its departures fit that level and focus, alongside its hypothesis, mechanism, evidence-based rationale, expected benefit, tradeoffs, failure conditions, system reuse, departures and cost. Explain what stays faithful and what changes; present these fields consistently so directions can be compared. Distinguish predicted improvements from demonstrated results; do not invent user research or claim an untested metric gain.
 
 ## Make and evaluate artifacts
 
 Deliver the requested fidelity: flow sketches, wireframes, screen concepts or prototypes, plus the reasoning required to assess them. Use realistic supplied content and comparable edge states. Preserve original sources; create alternatives only in an authorized separate destination. Do not overwrite production designs or modify shared components, variables, styles or published libraries as a side effect of exploration.
 
-Reuse existing assets by identity when feasible. Label proposed extensions and exploratory raw values; do not promote them into new system tokens/styles without authorization. Preserve source assets and their provenance; do not fabricate logos, rewrite required copy or simplify data in ways that conceal layout problems.
+Reuse existing assets by identity when feasible. Label proposed extensions and exploratory raw values; do not promote them into new system tokens/styles without authorization.
+
+When `visual` is in focus, do not hold directions to the existing token set. Use exploratory raw values for type, color, spacing, radius, and motion where the visual hypothesis needs them, label them as exploratory, and note the nearest existing token where one exists. They remain proposals until approved. Preserve source assets and their provenance; do not fabricate logos, rewrite required copy or simplify data in ways that conceal layout problems.
 
 Compare against the brief's criteria with evidence and uncertainty. Examine accessibility, narrow layouts, long content, and relevant empty/loading/error/permission states proportionately. Recommend a direction with reasons and a next validation step, or explain the unresolved decision. Do not equate a recommendation with user selection or permission to build/publish.
 
@@ -53,4 +82,4 @@ Read [figma-handoff.md](references/figma-handoff.md) before handing off a select
 
 If Figma writing is already within the user's request, proceed within that scope and use the available construction guidance. Otherwise deliver the ready-to-build handoff without mutating Figma. If tooling cannot create or verify editable layers, state that limitation and deliver the spec/assets; never claim that a raster mockup or unverified import is complete editable Figma.
 
-Before finishing, verify the requested intensity distribution, distinct hypotheses and meaningful differences within the allowed levels, source fidelity, current constraints, fair comparison, explicit uncertainty, and a usable handoff. Separate visual fidelity checks from structural editability checks.
+Before finishing, verify the requested intensity distribution and focus, each direction's lead layer, distinct hypotheses and meaningful differences within the allowed levels and layers, source fidelity, current constraints, fair comparison, explicit uncertainty, and a usable handoff. Separate visual fidelity checks from structural editability checks.
