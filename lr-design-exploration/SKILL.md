@@ -7,6 +7,20 @@ description: Develop substantively different product design directions with expl
 
 Explore different ways to solve the user's design problem, then make the alternatives comparable and buildable. Stay product agnostic. Use `lr-figma-inspection` for an existing Figma baseline and `lr-figma-construction` for authorized construction when available; otherwise follow the same evidence and native-editability principles directly.
 
+## Settle the settings
+
+Before generating, settle count, intensity and focus. Ask only for settings the user has not given, explicitly or in natural language (“push the boundaries” settles intensity; “restyle” settles focus), and ask all of them together in one step of at most three questions. Use the environment's multiple-choice question tool when one is available; otherwise ask in plain text. Put the default first in each question so accepting defaults takes one answer.
+
+| Question | Options (default first) | Ask when |
+| --- | --- | --- |
+| How far should it go? | Give me a range (mixed) · Keep it close (1) · Explore alternatives (2) · Push the boundaries (3) | Intensity not given. Skip in seeded rounds, which default to [1, 2, 2]. |
+| What can change? | Everything (`all`) · Product · UX · UI · Visual · Brand. Allow several. | Focus not given. |
+| How many directions? | 3 · 2 · 5 | Count not given and not implied by an intensity list. |
+
+When an earlier exploration round is in the conversation and the user has not said whether to build on it, add one question: “Start from one of the previous directions?” with one option per direction plus “No, start fresh”. A chosen direction becomes the seed.
+
+Do not ask about fidelity; it stays `prototype` unless the user names another level. Do not ask anything when the run is unattended (scheduled, or the user said they will check back later) or when the user has said to use defaults: apply the defaults and state them. Never ask about a setting the user already gave, and do not re-ask settings in later rounds unless the user changes them.
+
 ## Establish a brief and source contract
 
 Identify the user task, audience, target device/context, intended outcome, and evidence of the current problem. Read supplied source artifacts and project guidance before proposing directions. Distinguish requirements and measured findings from preferences and hypotheses.
@@ -54,7 +68,7 @@ Give each direction a lead layer, the one its hypothesis is mainly about. With `
 
 Interpret natural language: “make it look different”, “new visual direction”, or “restyle” means `visual`; “different layouts” means `ui`; “rethink the flow” means `ux`; “what should this feature do” means `product`; “rebrand” includes `brand`.
 
-State the chosen count, intensity distribution, focus, and each direction's lead layer before generating designs.
+Before generating, state the settled settings as one copyable line the user can reuse or edit to rerun without being asked, for example: `Settings: 3 directions · intensity mixed (1, 2, 3) · focus all · fidelity prototype`. Add `seed: D` for a seeded round. Then name each direction's lead layer.
 
 ## Iterate from a seed
 
@@ -75,7 +89,7 @@ Read [direction-framework.md](references/direction-framework.md) when forming or
 
 When `visual` is in focus, a coherent change of visual language is a substantive difference. It must be a deliberate system applied across the screen with its own hypothesis, not a palette swap or scattered tweaks. When `visual` is not in focus, color, font, and radius changes alone are cosmetic and do not establish diversity. Refine directions must still produce meaningfully different hypotheses (usability, comprehension, or, with `visual` in focus, perception) without changing the preserved structure.
 
-Choose enough directions to expose the useful trade space, normally two or three unless the user specifies otherwise. Before making artifacts, give each direction a distinct, testable hypothesis and identify how its mechanism and expected user-facing benefit differ from the others, including directions at the same intensity. Each must offer a credible drawback. Intensity measures departure from the baseline; diversity measures differences between directions, so level labels alone do not establish diversity. Keep task, content, representative data, viewport, states and fidelity consistent enough for fair comparison. Do not manufacture a weak alternative to justify a preferred one.
+Use the settled count (three by default) and make sure it exposes the useful trade space. Before making artifacts, give each direction a distinct, testable hypothesis and identify how its mechanism and expected user-facing benefit differ from the others, including directions at the same intensity. Each must offer a credible drawback. Intensity measures departure from the baseline; diversity measures differences between directions, so level labels alone do not establish diversity. Keep task, content, representative data, viewport, states and fidelity consistent enough for fair comparison. Do not manufacture a weak alternative to justify a preferred one.
 
 For each direction, use the referenced direction card and include its intensity name/number, lead layer, and why its departures fit that level and focus, alongside its hypothesis, mechanism, evidence-based rationale, expected benefit, tradeoffs, failure conditions, system reuse, departures and cost. Explain what stays faithful and what changes; present these fields consistently so directions can be compared. Distinguish predicted improvements from demonstrated results; do not invent user research or claim an untested metric gain.
 

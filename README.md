@@ -21,7 +21,29 @@ inspection  →  exploration  →  construction
 
 `lr-design-exploration` refers to the other two by name and falls back to the same principles when they aren't installed.
 
-## Exploration intensity
+## Quick start
+
+Point the exploration skill at a design and say what you want to improve:
+
+```text
+Use lr-design-exploration on the dashboard (Figma link).
+```
+
+If you haven't said how far to go, what can change, or how many directions you want, Claude asks first, in up to three quick multiple-choice questions with the defaults listed first. Settings you already gave, in plain language or as `intensity:` / `focus:`, are never asked again. After an earlier round, it also offers to start from one of the previous directions.
+
+Before generating, Claude prints a settings line you can copy to rerun or tweak without any questions:
+
+```text
+Settings: 3 directions · intensity mixed (1, 2, 3) · focus all · fidelity prototype
+```
+
+The result is an interactive comparison of working prototypes, ready to hand off to Figma.
+
+## Going further: exploration settings
+
+Everything below is optional. Each setting can be typed directly, described in plain language, or left for Claude to ask about.
+
+### Exploration intensity
 
 `lr-design-exploration` controls how far each direction departs from the current experience:
 
@@ -31,7 +53,7 @@ inspection  →  exploration  →  construction
 | **2 — Rethink** | Alternative layouts, navigation, information architecture and interaction patterns while preserving core functionality and user goals. |
 | **3 — Reinvent** | Fundamentally different concepts, workflows or visual languages while preserving underlying user needs, product goals and explicit requirements. Speculative functionality is labeled. |
 
-**Mixed is the default.** For five directions, it produces **2 Refine, 2 Rethink and 1 Reinvent**. The skill normally produces two or three directions unless you request another count: two uses one Refine and one Rethink; three uses one of each. Other counts approximate the 2:2:1 balance while keeping a useful range.
+**Mixed is the default.** For five directions, it produces **2 Refine, 2 Rethink and 1 Reinvent**. The default count is three: two uses one Refine and one Rethink; three uses one of each. Other counts approximate the 2:2:1 balance while keeping a useful range.
 
 Specify a single level for all directions, choose Mixed, or assign a level to each direction:
 
@@ -49,7 +71,7 @@ Natural-language overrides work too: “keep it close” selects Refine, “expl
 
 Each direction has a distinct, testable hypothesis and a meaningful user-facing difference, including directions at the same level. Each presents its intensity, rationale, expected benefit, tradeoffs and implementation cost, explaining what stays faithful and what changes. Different intensity labels or cosmetic changes alone do not establish diversity.
 
-## Exploration focus
+### Exploration focus
 
 Intensity sets how far a direction departs. Focus sets which layers of the design it may change:
 
@@ -78,7 +100,7 @@ When `visual` is in focus, a coherent new visual language counts as a meaningful
 
 Natural language works here too: “make it look different” or “restyle” selects `visual`, “different layouts” selects `ui`, “rethink the flow” selects `ux`, and “rebrand” adds `brand`.
 
-## Iterating from a seed
+### Iterating from a seed
 
 When one direction stands out, make it the seed for the next round. The seed becomes the new baseline: its defining traits are kept, your note says what to change, and intensity and focus are measured from the seed instead of the original design.
 
@@ -99,7 +121,7 @@ How a seeded round works:
 - **Combining.** `seed: [C, D]` names which traits come from each direction, resolves conflicts, and reassesses the result.
 - **Lineage.** Directions are named after the seed (D1, D2, D3) and each records its chain (original → D → D2). In the prototype, the seed is the control tab and the original design stays available. The seed's prototype code is reused, so data and interactions carry over.
 
-## Output fidelity
+### Output fidelity
 
 By default, `lr-design-exploration` delivers one interactive comparison artifact. You can switch between directions (and the baseline), each direction works on the same shared data, and the source's main interactions function: filters, drag and drop, expand and collapse, light and dark mode where the source has them.
 
