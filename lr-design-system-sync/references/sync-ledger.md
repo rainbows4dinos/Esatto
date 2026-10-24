@@ -66,7 +66,7 @@ Evidence: screenshots in design-sync/evidence/card-*.png, typecheck pass
 | `blocked` | Can't proceed (missing font, build error, missing access). | Reason and what unblocks it. |
 | `needs-decision` | Code-owned area affected, rename unconfirmed, ownership unclear. | The question for the user. |
 | `needs-figma-fix` | Figma hygiene problem. | Node ID and the fix. |
-| `fixed-in-figma` | Hygiene problem fixed in Figma by the agent, with approval. | What was bound, and any value change flagged for review. |
+| `fixed-in-figma` | Hygiene problem fixed in Figma, by the agent with approval or by the designer. | Who fixed it, what changed, and any value change flagged for review. Re-read Figma to confirm before closing. |
 
 Rules:
 
