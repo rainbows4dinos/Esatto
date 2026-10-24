@@ -52,6 +52,11 @@ If the checklist is empty, the row is `synced` with "no structural drift" and th
 
 ### 5. Verify
 
+If the project has no component gallery (Storybook or similar), add `design-sync/preview.html`: a standalone page that loads the shared stylesheets and renders each synced variant inside a `[data-shot]` wrapper, with a query parameter for each theme. It is not linked from the app. Add each batch's components to it.
+
+Render with a headless browser script saved as `design-sync/scripts/shot.mjs` that screenshots every `[data-shot]` element in every theme and records computed size, padding, gap, radius, colors, and font for it and its children. Block web fonts and load the same families from a local package (for example `@fontsource`) so results do not depend on network access. Compare the recorded numbers with Figma's auto layout values first, then the screenshots side by side with `get_screenshot` of the component set. Save one composite image and the metrics JSON per batch in `design-sync/evidence/`.
+
+
 - Render each variant in the preview (Storybook, dev route, or a test page) at the Figma frame's size and screenshot it, with Playwright or the available browser.
 - Compare against the Figma screenshots: layout, spacing, alignment, child order, type. Note differences that remain and why (font rendering, code-owned behavior).
 - Run the type check.
@@ -78,5 +83,9 @@ If the checklist is empty, the row is `synced` with "no structural drift" and th
 | `clipsContent` | `overflow: hidden` |
 | `strokesIncludedInLayout` false | Figma does not count the stroke in layout; use `outline` or an inset `box-shadow`, or offset the padding |
 | text auto-resize `HEIGHT` / `NONE` with truncation | wrapping or `text-overflow: ellipsis` with the matching line clamp |
+
+When Figma's layout and the code's differ but render the same, keep the code's approach if switching would break something code-owned, and record why in the checklist. Example: a label that is horizontal auto layout in Figma but `display: block` in code because consumers add inline description text that flex would collapse.
+
+After each batch, bump the cache revision on the stylesheets that changed, if the project versions its asset URLs.
 
 Hidden layers that are toggled by a boolean property map to conditional rendering, not `display: none`, unless the code already uses that pattern.
