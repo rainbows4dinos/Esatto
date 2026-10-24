@@ -28,6 +28,8 @@ For the component set and each variant:
 
 The component file, its styles, its props interface, and its preview.
 
+Then search the consuming pages for local markup that implements the same component or one of its optional Figma properties (hidden slots, booleans that default to off). A slot with no shared CSS can still be built locally on one page, for example a link positioned inside an input. Search by role and pattern (absolutely positioned children of the control, extra classes on the wrapper), not only by the shared class name. Never record a property as unused based on the shared stylesheet alone; promote a local implementation into the shared component instead.
+
 ### 3. Write the checklist
 
 Compare the two and write a checklist into the component's ledger row. One line per difference, grouped:

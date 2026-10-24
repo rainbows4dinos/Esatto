@@ -47,6 +47,8 @@ Before matching, check for problems that would make the sync guess:
 
 Scan with one read-only `use_figma` call over the library components page: for each component set, count unbound fills, strokes, padding, gaps, and radii, and text nodes without a text style, and return one example node ID per issue type. Collect nested instance names in the same pass; they become `dependsOn` in the component map.
 
+Instances of icons or other library components may expose no inner layers through the API, so their colors and bindings cannot be read. Record those as unverified and ask the designer, rather than filing them as unbound. A hygiene row must rest on something the API actually returned.
+
 Each becomes a `needs-figma-fix` row with the node ID. Continue the audit. Fixes only need to land before the affected component's batch in component sync; token sync does not depend on them. Fix shared dependencies first (a label used by every input, for example).
 
 ### Agent fixes (opt-in)
