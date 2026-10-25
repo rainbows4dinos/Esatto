@@ -16,12 +16,7 @@ Record counts and identifiers for each category:
 
 If a read paginates or truncates, keep reading until the count is complete. A partial read is never treated as the full inventory.
 
-Read mechanics (from Figma's `figma-use` rules):
-
-- One category per `use_figma` call, returning compact strings (`name = light / dark`) rather than full objects. Measure the return size before returning.
-- Resolve aliases to the target variable's name, not its value. Aliases are what the code should mirror.
-- A color value can be an alias with opacity (`{ color: VARIABLE_ALIAS, opacity: 80 }`). Record it as `@target 80%`, not `[object Object]`.
-- The plugin API does not expose the file's last-modified time. Record the read date and the code commit instead.
+Read mechanics are in "Reading Figma" in [conventions.md](conventions.md). For the sync specifically: aliases are what the code should mirror, so record the target name; and record the read date and the code commit, since Figma does not expose last-modified.
 
 `scripts/figma/read-inventory.js` does this: set its `CATEGORY` (and `PAGE_IDS` for components), run it once per category, and merge each result into the inventory file. A recent `figma-baseline.json` from `lr-figma-inspection` uses the same format and can seed the inventory; re-read any category it left out or that changed since. Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
 

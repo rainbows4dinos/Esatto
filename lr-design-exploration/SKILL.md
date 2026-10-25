@@ -7,6 +7,8 @@ description: Develop substantively different product design directions with expl
 
 Explore different ways to solve the user's design problem, then make the alternatives comparable and buildable. Stay product agnostic. Use `lr-figma-inspection` for an existing Figma baseline and `lr-figma-construction` for authorized construction when available; otherwise follow the same evidence and native-editability principles directly.
 
+Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
+
 ## Settle the settings
 
 Before generating, settle count, intensity and focus. Ask only for settings the user has not given, explicitly or in natural language (“push the boundaries” settles intensity; “restyle” settles focus), and ask all of them together in one step of at most three questions. Use the environment's multiple-choice question tool when one is available; otherwise ask in plain text. Put the default first in each question so accepting defaults takes one answer.

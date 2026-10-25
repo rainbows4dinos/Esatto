@@ -23,7 +23,7 @@ For each style, capture:
 | Figma | CSS |
 |---|---|
 | `fontName.family` | `font-family`, with the existing fallback stack |
-| `fontName.style` | `font-weight` and `font-style`. Map names to numbers (Thin 100, Extra Light 200, Light 300, Regular 400, Medium 500, Semi Bold 600, Bold 700, Extra Bold 800, Black 900). "Italic" sets `font-style: italic`. |
+| `fontName.style` | `font-weight` and `font-style`, using the weight map in "Value notation" in [conventions.md](conventions.md). "Italic" sets `font-style: italic`. |
 | `fontSize` | `font-size` in configured units |
 | `lineHeight` `PIXELS` | unitless ratio (`lineHeight / fontSize`) unless the code uses fixed values |
 | `lineHeight` `PERCENT` | unitless ratio (`value / 100`) |

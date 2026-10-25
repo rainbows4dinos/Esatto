@@ -7,6 +7,8 @@ description: Inspect an existing Figma file or selection without changing it. Us
 
 Build a reliable account of what exists, what is reusable, and what remains unknown. This skill inspects; `lr-design-exploration` develops alternatives and `lr-figma-construction` builds editable artifacts. Neither companion is required to produce an inspection report.
 
+Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
+
 ## Boundaries
 
 Keep the Figma document unchanged. Do not create or duplicate nodes, detach instances, import components, publish libraries, bind variables, switch document modes, resize frames, change selection, add comments, or run repair actions. A report may be returned in chat or saved outside Figma in the user's requested location. Findings are proposals, not authorization to fix the file.

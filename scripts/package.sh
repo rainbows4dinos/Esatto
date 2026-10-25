@@ -5,6 +5,7 @@
 #   scripts/package.sh lr-figma-inspection lr-design-system-sync
 set -euo pipefail
 cd "$(dirname "$0")/.."
+scripts/sync-shared.sh --check || { echo 'error: shared/conventions.md copies are stale; run scripts/sync-shared.sh' >&2; exit 1; }
 mkdir -p zips
 skills=("$@")
 [ ${#skills[@]} -eq 0 ] && skills=(lr-*/)

@@ -7,6 +7,8 @@ description: Sync a Figma design system into a codebase, item by item, tracked i
 
 Bring a codebase in line with its Figma design system without losing items along the way. Version 1 is one-way, Figma to code. The ownership table in [source-of-truth.md](references/source-of-truth.md) decides which side wins for each area, so a later code-to-Figma direction can reuse it.
 
+Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
+
 The main failure this skill prevents is silent skipping. Token sync is one bounded diff and usually goes well. Component structure, layout, and text styles are many separate jobs, and they get dropped when nothing tracks them. Every item therefore gets a ledger row before work starts, and the sync is not done while any row is open.
 
 ## Boundaries

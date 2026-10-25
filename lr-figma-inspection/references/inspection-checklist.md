@@ -4,16 +4,7 @@ Use relevant sections; this is not a requirement to crawl every node. Record obs
 
 ## Read mechanics
 
-These keep reads complete and returns small. They come from Figma's `figma-use` rules and from real audits.
-
-- One category per `use_figma` call (variables, text styles, effect styles, paint styles, components, one page each), returning compact values rather than full objects. Measure the return size before returning; split instead of truncating.
-- Text styles are not returned by variable reads. Read them with `getLocalTextStylesAsync()` and record which properties are bound to variables; a style bound to fewer variables than its siblings is usually a missed binding.
-- A color can be an alias with opacity (`{ color: VARIABLE_ALIAS, opacity }`). Record it as `@target 80%`, not as an object.
-- Resolve aliases to the target variable's name. The name is what code and construction should mirror; the resolved value is secondary.
-- Values inside nested instances may not be readable. Record them as `unverified` and ask the designer; never report them as unbound.
-- A gap on an auto layout frame with one child has no effect. Do not report it.
-- The plugin API does not expose the file's last-modified time. Record the read date instead.
-- Library variables and styles are fully readable only in the file that defines them. In a consuming file, note which are remote.
+Follow "Reading Figma" in [conventions.md](conventions.md): one category per call, text styles read separately with their bindings, aliases recorded by name (with opacity when present), values inside nested instances marked `unverified`, and no findings for gaps on single-child frames.
 
 ## File, system, and coverage
 

@@ -7,6 +7,8 @@ description: Build editable, structurally sound Figma designs from a prototype, 
 
 Turn a source design into native, editable Figma layers that look right and behave right. Use `lr-figma-inspection` for the baseline and `lr-design-exploration` handoffs as input when available; otherwise apply the same principles directly. The goal is a file a designer can keep working in, matched to the source and verified frame by frame.
 
+Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
+
 ## Boundaries and destination
 
 Write only to the destination the user authorized: a named page, section or new file. When none is named, propose one (a separate page or section beside the source) and confirm before writing. Never modify source frames, shared components, variables, styles or published libraries as a side effect. Do not create tokens or styles, add variants to existing components, or publish anything without explicit authorization. Exploratory structures stay local to the destination and are labeled as such.

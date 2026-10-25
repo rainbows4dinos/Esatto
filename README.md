@@ -328,9 +328,14 @@ lr-design-system-sync/
     ├── ledger.py                render, status, set, add, log, mirror
     ├── bump-cache.py, shot.mjs
     └── figma/                   use_figma code: inventory read, hygiene scan, mirror
+shared/
+└── conventions.md               rules every skill follows; copied into each skill's references/
 scripts/
-└── package.sh                   rebuild the skill zips for the Claude app
+├── sync-shared.sh               copy shared/conventions.md into each skill
+└── package.sh                   rebuild the skill zips for the Claude app (fails if copies are stale)
 ```
+
+Each skill also carries `references/conventions.md`, a copy of `shared/conventions.md`: evidence statuses, Figma read rules, value notation, token rules, the stroke and padding rule, and the handoff files. Edit the master in `shared/`, then run `scripts/sync-shared.sh`.
 
 ## Installation
 
