@@ -8,6 +8,7 @@
 // Text styles are checked separately: read-inventory.js (textStyles) lists the properties bound per style,
 // and a style with fewer bindings than its siblings is usually a missed variable.
 const PAGE_ID = '';           // the library components page, e.g. '92:5175'
+const ONLY = [];              // optional: component or set names to scan, e.g. after a fix (ledger.py affected)
 const CHECK_PAINTS = true;    // fills and strokes without a variable or paint style
 const MAX_BYTES = 45000;
 
@@ -15,7 +16,9 @@ if (!PAGE_ID) throw new Error('Set PAGE_ID');
 const page = await figma.getNodeByIdAsync(PAGE_ID);
 await figma.setCurrentPageAsync(page);
 const owners = page.findAllWithCriteria({ types: ['COMPONENT_SET', 'COMPONENT'] })
-  .filter((n) => n.type === 'COMPONENT_SET' || !n.parent || n.parent.type !== 'COMPONENT_SET');
+  .filter((n) => n.type === 'COMPONENT_SET' || !n.parent || n.parent.type !== 'COMPONENT_SET')
+  .filter((n) => !ONLY.length || ONLY.includes(n.name));
+const notFound = ONLY.filter((name) => !owners.some((n) => n.name === name));
 
 const LAYOUT = ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'itemSpacing', 'counterAxisSpacing'];
 const RADII = ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'];
@@ -68,7 +71,7 @@ for (const owner of owners) {
   total += count;
   result[owner.name] = { nodeId: owner.id, variants: variants.length, unbound: count, issues, nested: [...nested].sort() };
 }
-const out = { page: page.name, components: owners.length, totalUnbound: total, result };
+const out = { page: page.name, components: owners.length, totalUnbound: total, notFound, result };
 const size = JSON.stringify(out).length;
 if (size > MAX_BYTES) throw new Error('Return is ' + size + ' bytes. Scan fewer components per call (filter owners by name).');
 return out;

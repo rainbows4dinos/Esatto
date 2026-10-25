@@ -11,17 +11,17 @@ Turn a source design into native, editable Figma layers that look right and beha
 
 Write only to the destination the user authorized: a named page, section or new file. When none is named, propose one (a separate page or section beside the source) and confirm before writing. Never modify source frames, shared components, variables, styles or published libraries as a side effect. Do not create tokens or styles, add variants to existing components, or publish anything without explicit authorization. Exploratory structures stay local to the destination and are labeled as such.
 
-Before the first write call, load the Figma integration's own guidance when it provides one (for example the `figma-use` skill required before `use_figma`). Inspect the tools actually available; do not invent tool names or assume capabilities.
+Before the first `use_figma` call, read Figma's `figma-use` skill, and before the first visible write also read `figma-generate-design`; pass both in `skillNames`. Read `figma-generate-library` as well if the user authorizes new library components. Inspect the tools actually available; do not invent tool names or assume capabilities.
 
 ## Agree a build list before building
 
-From the source and any handoff, write a build list: every frame × viewport × mode the source has, plus the components and states needed. Default to building every mode the source supports. When colors are bound to variables, a second mode is a duplicate with the mode switched, and it also tests the bindings, because any raw value that should have been a variable shows up wrong. Viewports that need real layout work (such as phone from desktop) are built when the source has them; if that is too large for one pass, say so before building and agree what is deferred. Scope is settled at the start, never discovered in the final report.
+From the source and any handoff, write a build list: every frame × viewport × mode the source has, plus the components and states needed. Save it as a manifest file in the format in [build-manifest.md](references/build-manifest.md) and update each frame's status as it changes. If a manifest already exists (a resumed build, or one from an exploration handoff), continue from it. Default to building every mode the source supports. When colors are bound to variables, a second mode is a duplicate with the mode switched, and it also tests the bindings, because any raw value that should have been a variable shows up wrong. Viewports that need real layout work (such as phone from desktop) are built when the source has them; if that is too large for one pass, say so before building and agree what is deferred. Scope is settled at the start, never discovered in the final report.
 
 For each direction, list its signature details: the distinctive treatments that make it that direction (restyled controls, connectors, numerals, shadows, color fields, motion stand-ins). Take them from the direction card and the prototype. This list is checked frame by frame during verification.
 
 ## Map before drawing
 
-Inspect the target file's components, variables, styles and modes, or reuse a recent inspection after rechecking anything material. Map each source element to an existing asset, a configuration of one, or a new local structure, choosing tokens by semantic role, never by matching values. Read [design-tokens.md](references/design-tokens.md) and [component-practices.md](references/component-practices.md) when mapping.
+Inspect the target file's components, variables, styles and modes, or reuse a recent inspection (its `figma-baseline.json` when there is one) after rechecking anything material. Map each source element to an existing asset, a configuration of one, or a new local structure, choosing tokens by semantic role, never by matching values. Read [design-tokens.md](references/design-tokens.md) and [component-practices.md](references/component-practices.md) when mapping.
 
 **Fidelity over reuse in explorations.** When an existing component can match the direction through its properties, use it. When it cannot, build a local exploratory variant or structure that does, and flag it as a proposal. Never substitute the library default when that changes how the direction looks; a direction rebuilt from default parts is a different direction. Values the direction introduced (type sizes, colors, radii, shadows) stay as labeled raw values, with the nearest existing token noted. A raw value cannot change between modes, so when the source uses a different value per mode (a surface that is light gray in one mode and dark in the other) and no existing token matches both, flag it as a token proposal while mapping, before building, and agree a stand-in. Do not discover it in the second mode's screenshot.
 
@@ -37,7 +37,7 @@ Missing fonts, unavailable library assets, or images that cannot be placed are r
 
 ## Verify every frame
 
-For every frame in every mode, take a screenshot and compare it with the source in the same state, viewport and mode. Check content, hierarchy, spacing, type, color, wrapping and each signature detail on the list. Then check structure: layer types, instance links, variable and style bindings, sizing behavior, and no stray rasters or flattened text. Fix what differs, then check again; stop after two fix passes and report what remains.
+For every frame in every mode, take a screenshot and compare it with the source in the same state, viewport and mode. Check content, hierarchy, spacing, type, color, wrapping and each signature detail on the list. Then check structure: layer types, instance links, variable and style bindings, sizing behavior, and no stray rasters or flattened text. Fix what differs, then check again; stop after two fix passes and report what remains. Record each frame's checks and status in the manifest as you go, not at the end.
 
 A gap is reported only when it is blocked by a tool limitation, an unavailable asset, or the agreed scope. Anything fixable within scope is fixed, not listed.
 
@@ -52,4 +52,4 @@ Return:
 - Remaining gaps with the reason each could not be closed.
 - Confirmation that the source frames and shared library assets were not changed.
 
-Do not claim responsive behavior, multi-mode support or editability that was not verified.
+Do not claim responsive behavior, multi-mode support or editability that was not verified. Do not finish while any manifest frame is `pending` or `built`; lead the report with frame counts by status and attach the manifest.

@@ -5,6 +5,7 @@
   python3 design-sync/scripts/ledger.py set C-07 synced --notes "..." --evidence "design-sync/evidence/batch-3.png"
   python3 design-sync/scripts/ledger.py add Components "Avatar" --fref 205:679 --cref .nc-avatar --cls missing-in-code --status needs-decision --notes "Build or skip?"
   python3 design-sync/scripts/ledger.py log "Token sync: 50 tokens added"
+  python3 design-sync/scripts/ledger.py affected "Input Label"   components to re-check after a Figma fix
   python3 design-sync/scripts/ledger.py mirror           writes design-sync/mirror.generated.js for use_figma
 
 ledger.json is a list of rows: {id, cat, item, fref, cref, cls, status, notes, count?, checklist?, evidence?}.
@@ -145,6 +146,28 @@ def topo(names, cmap):
     return [n for n in order if n in names]
 
 
+def affected(ctx, rows, names):
+    """The named components plus every component that contains them, directly or through others."""
+    cmap = ctx.load('component-map.json', {})
+    deps = {c['figma']['name']: set(c.get('dependsOn', [])) for c in cmap.get('components', [])}
+    for c in cmap.get('unmatched', {}).get('figmaOnly', []):
+        if isinstance(c, dict):
+            deps.setdefault(c.get('name'), set(c.get('dependsOn', [])))
+    unknown = [n for n in names if n not in deps]
+    if unknown:
+        print('not in component-map.json: ' + ', '.join(unknown))
+    hit = set(names)
+    while True:
+        more = {c for c, d in deps.items() if d & hit} - hit
+        if not more:
+            break
+        hit |= more
+    by_item = {r['item']: r for r in rows if r['cat'] == 'Components'}
+    for n in topo(sorted(hit), cmap) or sorted(hit):
+        r = by_item.get(n)
+        print('%-6s %-16s %s%s' % (r['id'] if r else '-', r['status'] if r else '(no row)', n, '' if n in names else '  (contains it)'))
+
+
 def status(ctx, rows):
     _, counts = inventory_counts(ctx)
     short = ['pending', 'synced', 'skipped', 'blocked', 'decision', 'fig-fix', 'fig-done']
@@ -250,6 +273,8 @@ def main():
     ad.add_argument('--cls', default='structure-drift')
     ad.add_argument('--status', default='pending', choices=STATUSES)
     ad.add_argument('--count', type=int)
+    af = sub.add_parser('affected')
+    af.add_argument('names', nargs='+')
     lg = sub.add_parser('log')
     lg.add_argument('entry')
     a = p.parse_args()
@@ -261,6 +286,8 @@ def main():
         status(ctx, rows)
     elif a.cmd == 'mirror':
         mirror(ctx, rows)
+    elif a.cmd == 'affected':
+        affected(ctx, rows, a.names)
     elif a.cmd == 'log':
         log = ctx.load('log.json', [])
         log.append({'date': str(datetime.date.today()), 'entry': a.entry})

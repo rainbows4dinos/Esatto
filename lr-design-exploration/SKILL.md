@@ -17,7 +17,7 @@ Before generating, settle count, intensity and focus. Ask only for settings the 
 | What can change? | Everything (`all`) · Product · UX · UI · Visual · Brand. Allow several. | Focus not given. |
 | How many directions? | 3 · 2 · 5 | Count not given and not implied by an intensity list. |
 
-When an earlier exploration round is in the conversation and the user has not said whether to build on it, add one question: “Start from one of the previous directions?” with one option per direction plus “No, start fresh”. A chosen direction becomes the seed.
+When an earlier exploration round is in the conversation, or its prototype link or round file is supplied, and the user has not said whether to build on it, add one question: “Start from one of the previous directions?” with one option per direction plus “No, start fresh”. A chosen direction becomes the seed.
 
 Do not ask about fidelity; it stays `prototype` unless the user names another level. Do not ask anything when the run is unattended (scheduled, or the user said they will check back later) or when the user has said to use defaults: apply the defaults and state them. Never ask about a setting the user already gave, and do not re-ask settings in later rounds unless the user changes them.
 
@@ -27,7 +27,7 @@ Identify the user task, audience, target device/context, intended outcome, and e
 
 List what must remain faithful: required content, data semantics, brand assets, workflow obligations, navigation contracts, component behavior, and any visual intent the user asked to preserve. If the request is faithful reproduction, treat alternatives as optional proposals outside the faithful baseline; do not silently redesign it. When redesign is requested, state the fidelity contract at the level of intent and required behavior rather than freezing every pixel.
 
-Use current available system evidence: components, variants, tokens, modes, layout rules, platform/runtime constraints, and implementation capacity. Recheck stale inspection results where material. A screenshot is visual evidence, not proof of tokens or component availability. Mark missing access, unknown capabilities and assumptions. Ask only when uncertainty blocks a consequential decision; continue independent work with labeled assumptions.
+Use current available system evidence: components, variants, tokens, modes, layout rules, platform/runtime constraints, and implementation capacity. When an inspection baseline (`figma-baseline.json` from `lr-figma-inspection`) exists, start from it. Recheck stale inspection results where material. A screenshot is visual evidence, not proof of tokens or component availability. Mark missing access, unknown capabilities and assumptions. Ask only when uncertainty blocks a consequential decision; continue independent work with labeled assumptions.
 
 ## Set exploration intensity
 
@@ -81,7 +81,7 @@ A seed makes a previous direction the baseline for a new round. Accept `seed: <d
 - **Distinct readings.** Each direction interprets the note differently through a distinct mechanism, not as parameter steps of one idea (for example, three corner-radius values are one direction, not three).
 - **Combinations.** For a combined seed, name which traits come from each parent, resolve conflicts explicitly, and reassess the result rather than assuming both parents' benefits survive.
 - **Lineage.** Name directions after the seed (D1, D2, D3), record the chain (original → seed → direction) on each direction card, and show it in the artifact. In a prototype, the seed is the control tab, and the original baseline stays available as a second control.
-- **Reuse.** Start from the seed's prototype code and shared data when available, so interactions and data carry over instead of being rebuilt from a description. If the seed is not accessible, ask for it or reconstruct it from its direction card and say so.
+- **Reuse.** Start from the seed's round file and prototype code (see [round-file.md](references/round-file.md)), so the direction card, lineage, interactions and data carry over instead of being rebuilt from a description. Read them from the project folder or from the prototype link. If neither is accessible, ask for the link; reconstruct from the conversation only as a last resort, and say so.
 
 ## Choose meaningful exploration axes
 
@@ -106,6 +106,8 @@ A prototype deliverable is one interactive comparison artifact:
 - The active direction's card beside or below the prototype, followed by the comparison, recommendation, and handoff.
 
 Prototype controls need keyboard access and visible focus. Screenshots may support the brief but do not replace a working direction.
+
+Save every round as data in the format in [round-file.md](references/round-file.md): embedded in the prototype, and as a file when there is a project folder. Later rounds, other sessions, and construction read it from there.
 
 Use realistic supplied content and comparable edge states. Preserve original sources; create alternatives only in an authorized separate destination. Do not overwrite production designs or modify shared components, variables, styles or published libraries as a side effect of exploration.
 

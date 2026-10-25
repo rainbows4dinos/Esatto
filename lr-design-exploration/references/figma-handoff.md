@@ -26,7 +26,7 @@ A mapping table is useful:
 
 ## Build manifest
 
-Give construction a checklist instead of leaving it to rebuild one from the prototype:
+Give construction a checklist instead of leaving it to rebuild one from the prototype. Write it as a manifest file in the format `lr-figma-construction` uses (`references/build-manifest.md` in that skill), with every frame `pending`; construction continues from it. When that skill is not installed, use the same fields:
 
 - **Frames:** every direction × viewport × mode the prototype supports, marked required or optional, plus states worth drawing (hover, dragging, empty, expanded).
 - **Signature details:** for each direction, the distinctive treatments that make it that direction, such as restyled controls, connectors, numerals, shadows and color fields. Note which existing components cannot produce them as configured.

@@ -13,14 +13,23 @@ They are written to work inside an existing design system rather than around it.
 | [`lr-figma-construction`](lr-figma-construction/SKILL.md) | Builds designs in Figma from native, editable layers using existing components, tokens and nested auto layout. Agrees a build list of frames, viewports and modes first, then verifies every frame against the source. | Yes, within the authorized destination. |
 | [`lr-design-system-sync`](lr-design-system-sync/SKILL.md) | Syncs Figma variables, text and effect styles, and components into a codebase, one item at a time, tracked in a ledger committed with the code so nothing is silently skipped. | Only the optional `Sync status` ledger page. |
 
-They work best in sequence, but each one also stands alone:
+They work best in sequence, but each one also stands alone. Each step saves a file the next one reads, so nothing has to be re-read from Figma or rebuilt from memory, and work can resume in a new session:
 
 ```
-inspection  →  exploration  →  construction
-(baseline)     (directions)    (editable Figma)
+inspection         →  exploration          →  construction            →  design system sync
+figma-baseline.json   round file              build manifest              design-sync/ledger.json
+(what exists)         (in the prototype and   figma-build/<name>.json     (every token, style and
+                      explorations/<slug>/)   (every frame and status)    component, with status)
 ```
 
-`lr-design-system-sync` runs separately, whenever the Figma library changes and the code needs to catch up.
+| File | Written by | Read by |
+|---|---|---|
+| `figma-baseline.json` | inspection | exploration (system evidence), construction (mapping), sync (seeds `figma-inventory.json`) |
+| Round file, embedded in the prototype as `#exploration-round` | exploration | the next exploration round (`seed:`), construction (direction cards, signature details) |
+| `figma-build/<name>.json` | exploration handoff (all frames `pending`), construction | construction, to resume and to prove every frame was verified |
+| `design-sync/ledger.json` | sync | sync, to resume; `ledger.py status` answers "where are we?" |
+
+`lr-design-system-sync` usually runs separately, whenever the Figma library changes and the code needs to catch up.
 
 `lr-design-exploration` refers to the other two by name and falls back to the same principles when they aren't installed.
 
@@ -287,18 +296,21 @@ lr-figma-inspection/
 ├── SKILL.md
 └── references/
     ├── inspection-checklist.md
-    └── report-template.md
+    ├── report-template.md
+    └── baseline-json.md         machine-readable baseline format
 lr-design-exploration/
 ├── SKILL.md
 └── references/
     ├── direction-framework.md   how to form and evaluate directions
-    └── figma-handoff.md         what a buildable handoff must include
+    ├── figma-handoff.md         what a buildable handoff must include
+    └── round-file.md            saving a round so later rounds and sessions can seed from it
 lr-figma-construction/
 ├── SKILL.md
 └── references/
     ├── auto-layout.md
     ├── design-tokens.md
-    └── component-practices.md
+    ├── component-practices.md
+    └── build-manifest.md        frame list and status file
 lr-design-system-sync/
 ├── SKILL.md
 └── references/

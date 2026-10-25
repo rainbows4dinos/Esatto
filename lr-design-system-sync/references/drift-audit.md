@@ -23,7 +23,7 @@ Read mechanics (from Figma's `figma-use` rules):
 - A color value can be an alias with opacity (`{ color: VARIABLE_ALIAS, opacity: 80 }`). Record it as `@target 80%`, not `[object Object]`.
 - The plugin API does not expose the file's last-modified time. Record the read date and the code commit instead.
 
-`scripts/figma/read-inventory.js` does this: set its `CATEGORY` (and `PAGE_IDS` for components), run it once per category, and merge each result into the inventory file. Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
+`scripts/figma/read-inventory.js` does this: set its `CATEGORY` (and `PAGE_IDS` for components), run it once per category, and merge each result into the inventory file. A recent `figma-baseline.json` from `lr-figma-inspection` uses the same format and can seed the inventory; re-read any category it left out or that changed since. Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
 
 ## 2. Inventory code
 

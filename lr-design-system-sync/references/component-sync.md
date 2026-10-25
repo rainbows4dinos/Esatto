@@ -68,6 +68,16 @@ Render it with `design-sync/scripts/shot.mjs` (copied from this skill's `scripts
 - Bump cache revisions on every changed stylesheet and module, if the project versions its asset URLs (`?v=`). Run `scripts/bump-cache.py` with the paths in `config.json` `cacheRevisions`, so a chain of imports is not missed.
 - Save one composite image and the metrics JSON per batch in `design-sync/evidence/`, record the paths and check results in the row, and set the status.
 
+## After a Figma fix
+
+When the designer (or the agent, with approval) fixes something in Figma mid-sync, re-check only what it touches:
+
+1. `python3 design-sync/scripts/ledger.py affected "<Component>"` lists the component and every component that contains it, with their row IDs, from `dependsOn` in the component map.
+2. Re-read those components (step 1 of the loop) and re-run `figma/hygiene-scan.js` with `ONLY` set to their names.
+3. Close the hygiene row as `fixed-in-figma` after the re-read confirms it, and reopen any already-synced component whose Figma values changed (`ledger.py set C-07 pending --notes "reopened: ..."`). Sync it again in the next batch.
+
+Do not re-audit the whole library for one fix, and do not assume a fix landed without reading it back.
+
 ## Auto layout to CSS
 
 | Figma | CSS |

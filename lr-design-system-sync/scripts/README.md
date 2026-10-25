@@ -9,7 +9,7 @@ Helpers for `lr-design-system-sync`. Copy this folder into the target repo as `d
 | `token-diff.py` | Audit, token sync | Compares every Figma variable with the token CSS in every mode. Classes: match, alias-drift, value-drift, missing-in-code, plus code-only tokens. Writes `token-rows.json`. |
 | `text-style-check.py` | Audit, token sync | Checks every text style against the typography tokens and that its family and weight load on every entry page. Exit 1 on failure. |
 | `resolve-tokens.py` | Token sync | Before/after diff of final resolved values, to prove a token refactor changed only what it meant to. |
-| `ledger.py` | All | `render` (with count reconciliation), `status`, `set`, `add`, `log`, `mirror`. |
+| `ledger.py` | All | `render` (with count reconciliation), `status`, `set`, `add`, `log`, `affected`, `mirror`. |
 | `bump-cache.py` | Component sync | Bumps `?v=` revisions for changed assets and follows the import chain up to the entry pages. |
 | `shot.mjs` | Component sync | Screenshots and computed metrics for every `[data-shot]` element in the preview page, per mode. |
 | `figma/mirror.js` | Mirror | Template for the ledger mirror. `ledger.py mirror` fills it in. |

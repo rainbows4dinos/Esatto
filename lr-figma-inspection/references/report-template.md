@@ -14,7 +14,7 @@ Adapt depth to scope; omit irrelevant sections rather than inventing data.
 | Finding | Evidence/location | Status | Effect on requested work | Suggested next step |
 | --- | --- | --- | --- | --- |
 
-Status: observed, inferred, proposed, or unknown. Include confidence only when it adds information, and explain its basis. Proposals must not be phrased as facts about the existing file.
+Status: observed, inferred, proposed, unknown, or unverified (the API cannot read the value, for example a binding inside a nested instance). Include confidence only when it adds information, and explain its basis. Proposals must not be phrased as facts about the existing file.
 
 ## Reuse map
 
