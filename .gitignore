@@ -3,3 +3,5 @@
 
 # Local working docs
 docs/
+__pycache__/
+*.generated.js

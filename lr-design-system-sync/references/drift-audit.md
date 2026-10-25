@@ -23,7 +23,7 @@ Read mechanics (from Figma's `figma-use` rules):
 - A color value can be an alias with opacity (`{ color: VARIABLE_ALIAS, opacity: 80 }`). Record it as `@target 80%`, not `[object Object]`.
 - The plugin API does not expose the file's last-modified time. Record the read date and the code commit instead.
 
-Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
+`scripts/figma/read-inventory.js` does this: set its `CATEGORY` (and `PAGE_IDS` for components), run it once per category, and merge each result into the inventory file. Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
 
 ## 2. Inventory code
 
@@ -45,7 +45,7 @@ Before matching, check for problems that would make the sync guess:
 - Detached instances or lookalike layers inside components.
 - Variant sets with missing combinations.
 
-Scan with one read-only `use_figma` call over the library components page: for each component set, count unbound fills, strokes, padding, gaps, and radii, and text nodes without a text style, and return one example node ID per issue type. Collect nested instance names in the same pass; they become `dependsOn` in the component map.
+Scan with `scripts/figma/hygiene-scan.js`, one read-only `use_figma` call per library components page: for each component set, count unbound fills, strokes, padding, gaps, and radii, and text nodes without a text style, and return one example node ID per issue type. Collect nested instance names in the same pass; they become `dependsOn` in the component map. A gap on a frame with one child is not reported, since it has no effect. Text style bindings are checked by `text-style-check.py`: a style bound to fewer variables than its siblings is reported as a likely missed binding.
 
 Instances of icons or other library components may expose no inner layers through the API, so their colors and bindings cannot be read. Record those as unverified and ask the designer, rather than filing them as unbound. A hygiene row must rest on something the API actually returned.
 
@@ -67,7 +67,7 @@ When the user approves, bind unbound values to existing variables instead of wai
 
 Tokens and styles match by name through the recorded naming rule. Components match through the component map (see component-map.md).
 
-Compare with a script, not by reading. Parse the token files, apply the naming rule and exceptions, resolve which selector holds each mode, and compare against `figma-inventory.json`. Save the script in `design-sync/scripts/` so later runs reuse it. A system with a few hundred variables is too many to compare reliably by eye.
+Compare with a script, not by reading. `scripts/token-diff.py` parses the token files, applies the naming rules from config, resolves which selectors hold each mode, and compares against `figma-inventory.json`, classifying every variable. `scripts/text-style-check.py` does the same for text styles and font loading. If a whole collection comes back `missing-in-code`, the naming rule is wrong, not the code. A system with a few hundred variables is too many to compare reliably by eye.
 
 | Class | Meaning |
 |---|---|
@@ -85,4 +85,4 @@ Do not stop at value comparison for components. A component whose colors match c
 
 Write the rows to `design-sync/ledger.json`, then render `design-sync/ledger.md` from it with the template in sync-ledger.md. The JSON is what scripts and the Figma mirror read; the Markdown is what people read. Put the Figma file key, last-modified time, and inventory counts in the header. Add one row per variable group, per text style, per effect style, per paint style, and per component set. Variables can be grouped by collection and path prefix (for example `color/text/*`) when every member gets the same treatment; list the members in the row notes.
 
-Check: rows per category equal the Figma inventory counts. Make the render script assert this so a mismatch fails loudly. Then show the user the summary and the `needs-figma-fix` and `renamed?` items before changing code.
+Check: rows per category equal the Figma inventory counts. `ledger.py render` refuses to write `ledger.md` when they differ, when a row has an unknown status, or when a non-synced row has no reason. Then show the user the summary and the `needs-figma-fix` and `renamed?` items before changing code.

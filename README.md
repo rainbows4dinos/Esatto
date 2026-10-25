@@ -265,14 +265,18 @@ skip Avatar, build Company Avatar
 
 **Helper scripts**
 
-The audit saves its comparison scripts to `design-sync/scripts/`. The agent runs them, but you can too, from the `design-sync` folder:
+The skill ships its scripts in `lr-design-system-sync/scripts/` and copies them to `design-sync/scripts/` in your repo at setup, so every project runs the same tested code. The agent runs them, but you can too, from the repo root:
 
 ```bash
-python3 scripts/token-diff.py      # compare token files with figma-inventory.json
-python3 scripts/render-ledger.py   # rebuild ledger.md from ledger.json and check counts
+python3 design-sync/scripts/ledger.py status            # counts, open rows, next batch
+python3 design-sync/scripts/token-diff.py               # every Figma variable vs. the token CSS, per mode
+python3 design-sync/scripts/text-style-check.py         # text styles vs. type tokens, and loaded font weights
+python3 design-sync/scripts/ledger.py set C-07 synced --evidence design-sync/evidence/batch-3
+python3 design-sync/scripts/bump-cache.py 20261025-batch-3 --git   # ?v= revisions, following the import chain
+python3 design-sync/scripts/ledger.py mirror            # code for the Figma ledger mirror
 ```
 
-The script that first builds the ledger only runs during an audit and refuses to overwrite an existing ledger, since that would reset every status.
+`ledger.md` is rendered from `ledger.json` and refuses to render when row counts stop matching the Figma inventory. See [the scripts README](lr-design-system-sync/scripts/README.md) for the config keys.
 
 ## What's inside
 
@@ -304,6 +308,13 @@ lr-design-system-sync/
     ├── token-sync.md            variables, text, effect and paint styles
     ├── component-sync.md        per-component loop, auto layout to CSS
     └── sync-ledger.md           ledger format, statuses, Figma mirror
+└── scripts/                     copied into the target repo at setup
+    ├── token-diff.py, text-style-check.py, resolve-tokens.py
+    ├── ledger.py                render, status, set, add, log, mirror
+    ├── bump-cache.py, shot.mjs
+    └── figma/                   use_figma code: inventory read, hygiene scan, mirror
+scripts/
+└── package.sh                   rebuild the skill zips for the Claude app
 ```
 
 ## Installation
@@ -327,6 +338,15 @@ cp -R lr-* ~/.claude/skills/
 To scope the skills to one project, put them in that project's `.claude/skills/` directory instead.
 
 Run `/reload-skills` (or start a new session), then confirm the four `lr-` skills appear in the skills list.
+
+**Claude app (claude.ai and desktop):** upload a zip per skill under Settings > Capabilities > Skills. Build the zips from the current repo:
+
+```bash
+scripts/package.sh                          # every skill
+scripts/package.sh lr-design-system-sync    # just one
+```
+
+Uploaded skills are copies. After changing a skill, rebuild its zip and upload it again, or the app keeps running the old version. Linked Claude Code installs pick up changes on reload.
 
 ## Requirements
 

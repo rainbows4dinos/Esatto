@@ -11,8 +11,10 @@ design-sync/
 ├── component-map.json      Figma component to code links
 ├── ledger.json             rows (machine-readable)
 ├── ledger.md               rows and inventory (rendered)
-└── scripts/                token diff, ledger build, ledger render
-``` It is how progress survives across sessions and how skipped items stay visible.
+└── scripts/                copied from the skill: token-diff, text-style-check, ledger, shot, ...
+```
+
+The ledger is how progress survives across sessions and how skipped items stay visible.
 
 ## Template
 
@@ -79,7 +81,8 @@ Rules:
 A read-only copy of the ledger on the Figma canvas, so designers can see sync status next to the components. Turn it on with `"mirror": true` in config, or when the user asks.
 
 - The code ledger stays the source of truth. The mirror is generated from `ledger.json` on each run, and edits made on the canvas are overwritten. Designers who want to change a status tell the agent or edit the ledger.
-- Write only to a dedicated page named `Sync status` in the library file, inside one frame named `Design sync ledger`. Never touch other pages or design system nodes. On each run, remove that frame and rebuild it in one retry-safe call; do not create a second frame.
+- Build it with `python3 design-sync/scripts/ledger.py mirror`, which writes `design-sync/mirror.generated.js` from `ledger.json` and `config.json` `mirrorStyle`. Pass that file as the `use_figma` code, unedited. It removes the old frame and rebuilds it in one retry-safe call, and returns the row count and any `fallbacks` (variables, text styles, or badge it could not find). Report fallbacks; do not patch the canvas by hand. Targeted edits drift from the ledger.
+- Write only to a dedicated page named `Sync status` in the library file, inside one frame named `Design sync ledger`. Never touch other pages or design system nodes.
 - Build it with native auto layout and the library's own assets: bind fills, strokes, and padding to existing variables, use existing text styles, and use the system's status or badge component for statuses if it has one. Do not create new variables, styles, or components for the mirror. Raw values only where the system has nothing suitable.
 - Order: header (file, direction, date, code commit, a note that edits are overwritten), status totals, the inventory table, then **Fix in Figma** (`needs-figma-fix` rows), then **Needs a decision or blocked**, then the full rows by category. Designers should see their action items without scrolling past synced rows.
 - After agent hygiene fixes, the Fix in Figma section becomes Fixed in Figma with the same rows, so designers can see what changed in their file.
@@ -87,4 +90,4 @@ A read-only copy of the ledger on the Figma canvas, so designers can see sync st
 - Make each Figma node ID a node hyperlink (`setRangeHyperlink` with `{ type: 'NODE', value: id }`) so designers can click straight to the component.
 - Read Figma's `figma-use` skill (and `figma-generate-design`, which it requires for visible changes) before writing. Text style assignment is async (`setTextStyleIdAsync`), and fonts for every style used must be loaded first.
 - Confirm the page and frame names with the user on the first run, unless they already asked for the mirror by name.
-- Verify with one screenshot of the frame and a returned count of row frames that matches the ledger.
+- Verify with one screenshot of the frame, and check that the returned `uniqueRows` equals the ledger row count.

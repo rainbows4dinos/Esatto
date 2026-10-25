@@ -59,7 +59,8 @@ Solid paints usually duplicate variables. If a paint style and a variable descri
 
 ## Verify
 
-- Every token, text style, effect, and paint row in the ledger maps to a line in the output files. Search for each name; do not trust a summary.
+- `token-diff.py` reports every variable as `match`, and `text-style-check.py` passes. Search for effect and paint names by hand; do not trust a summary.
+- `resolve-tokens.py` against the pre-sync file lists only the value changes the sync intended.
 - Counts written equal counts in the ledger header.
 - The build and type check pass.
 - Spot-check a few computed values in a rendered page in each mode.

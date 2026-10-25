@@ -18,7 +18,7 @@ For the component set and each variant:
   - `primaryAxisAlignItems`, `counterAxisAlignItems`
   - `layoutSizingHorizontal` and `layoutSizingVertical` on each child
   - `minWidth`, `maxWidth`, `minHeight`, `maxHeight`, `clipsContent`, `layoutPositioning`
-  - `cornerRadius`, strokes and stroke weight, fills, effects
+  - `cornerRadius`, strokes, stroke weight, `strokeAlign`, and `strokesIncludedInLayout`, fills, effects
   - `boundVariables` and `textStyleId` / `effectStyleId` on each node
   - child order and visibility, and nested instances with their component keys
 - Component properties and variant axes from the map.
@@ -29,6 +29,8 @@ For the component set and each variant:
 The component file, its styles, its props interface, and its preview.
 
 Then search the consuming pages for local markup that implements the same component or one of its optional Figma properties (hidden slots, booleans that default to off). A slot with no shared CSS can still be built locally on one page, for example a link positioned inside an input. Search by role and pattern (absolutely positioned children of the control, extra classes on the wrapper), not only by the shared class name. Never record a property as unused based on the shared stylesheet alone; promote a local implementation into the shared component instead.
+
+Also search page and feature stylesheets for rules that restyle the shared component from outside (for example `.prospect-card strong { color: ... }`). They win on specificity or order, so the shared component can be correct and still render wrong on the page. Remove or fold them in as part of the sync, and note each one in the checklist.
 
 ### 3. Write the checklist
 
@@ -54,16 +56,17 @@ If the checklist is empty, the row is `synced` with "no structural drift" and th
 
 ### 5. Verify
 
-If the project has no component gallery (Storybook or similar), add `design-sync/preview.html`: a standalone page that loads the shared stylesheets and renders each synced variant inside a `[data-shot]` wrapper, with a query parameter for each theme. It is not linked from the app. Add each batch's components to it.
+If the project has no component gallery (Storybook or similar), add `design-sync/preview.html`: a standalone page that loads the shared stylesheets and renders each synced variant inside a `[data-shot]` wrapper, with a query parameter for each theme. It is not linked from the app. Add each batch's components to it. A component that only renders correctly in its real context (a nav item on the header background) gets that context in its preview cell.
 
-Render with a headless browser script saved as `design-sync/scripts/shot.mjs` that screenshots every `[data-shot]` element in every theme and records computed size, padding, gap, radius, colors, and font for it and its children. Block web fonts and load the same families from a local package (for example `@fontsource`) so results do not depend on network access. Compare the recorded numbers with Figma's auto layout values first, then the screenshots side by side with `get_screenshot` of the component set. Save one composite image and the metrics JSON per batch in `design-sync/evidence/`.
+Render it with `design-sync/scripts/shot.mjs` (copied from this skill's `scripts/`, see its README). It screenshots every `[data-shot]` element in every mode and records computed size, padding, gap, radius, colors, and font for it and its children. Serve the page over HTTP; `file://` breaks module imports. Web fonts are blocked and replaced with the same families from `@fontsource` so results do not depend on network access.
 
-
-- Render each variant in the preview (Storybook, dev route, or a test page) at the Figma frame's size and screenshot it, with Playwright or the available browser.
-- Compare against the Figma screenshots: layout, spacing, alignment, child order, type. Note differences that remain and why (font rendering, code-owned behavior).
+- Compare the recorded numbers with Figma's auto layout values first: height and width of each variant, padding, gap, radius. A 1 or 2px difference in height is almost always border math (see `strokesIncludedInLayout` below).
+- Then compare the screenshots side by side with `get_screenshot` of the component set: layout, spacing, alignment, child order, type. Note differences that remain and why (font rendering, code-owned behavior).
+- Check the component in at least one real consuming page as well, so page-level overrides show up.
 - Run the type check. If the project's checker ships a platform-specific binary that does not match the agent's shell, install the same version outside the repo and run it against the project; do not skip it or leave it to the user.
 - When inserting helpers into an existing file, never place them between a doc comment and the function it documents. In JSDoc-typed code that silently drops the types.
-- Record the evidence (screenshot paths, check results) in the row and set the status.
+- Bump cache revisions on every changed stylesheet and module, if the project versions its asset URLs (`?v=`). Run `scripts/bump-cache.py` with the paths in `config.json` `cacheRevisions`, so a chain of imports is not missed.
+- Save one composite image and the metrics JSON per batch in `design-sync/evidence/`, record the paths and check results in the row, and set the status.
 
 ## Auto layout to CSS
 
@@ -84,11 +87,11 @@ Render with a headless browser script saved as `design-sync/scripts/shot.mjs` th
 | `minWidth` / `maxWidth` / `minHeight` / `maxHeight` | same CSS properties |
 | `layoutPositioning` `ABSOLUTE` | `position: absolute` in a `position: relative` parent |
 | `clipsContent` | `overflow: hidden` |
-| `strokesIncludedInLayout` false | Figma does not count the stroke in layout; use `outline` or an inset `box-shadow`, or offset the padding |
+| `strokesIncludedInLayout` false (default), inside stroke | Figma measures padding from the outer edge, so the stroke sits inside the padding. With a CSS `border` and `box-sizing: border-box`, use `padding: calc(token - border-width)`; otherwise the component grows by twice the border. |
+| `strokesIncludedInLayout` true | Padding starts inside the stroke, which matches CSS `border` plus `padding: token` with no subtraction. Check this per component, and per nested frame, before subtracting. |
 | text auto-resize `HEIGHT` / `NONE` with truncation | wrapping or `text-overflow: ellipsis` with the matching line clamp |
 
 When Figma's layout and the code's differ but render the same, keep the code's approach if switching would break something code-owned, and record why in the checklist. Example: a label that is horizontal auto layout in Figma but `display: block` in code because consumers add inline description text that flex would collapse.
 
-After each batch, bump the cache revision on the stylesheets that changed, if the project versions its asset URLs.
 
 Hidden layers that are toggled by a boolean property map to conditional rendering, not `display: none`, unless the code already uses that pattern.
