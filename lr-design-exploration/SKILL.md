@@ -107,6 +107,8 @@ A prototype deliverable is one interactive comparison artifact:
 
 Prototype controls need keyboard access and visible focus. Screenshots may support the brief but do not replace a working direction.
 
+Mark up the prototype with the attributes in [prototype-contract.md](references/prototype-contract.md), then run `scripts/check-prototype.mjs` on it before publishing or handing off. It switches to every direction, runs each primary interaction, checks focus visibility and console errors, and exits non-zero on any failure. Fix failures and run it again; report anything it could not test. Run it with `--shots` before a Figma handoff to produce the reference screenshots.
+
 Save every round as data in the format in [round-file.md](references/round-file.md): embedded in the prototype, and as a file when there is a project folder. Later rounds, other sessions, and construction read it from there.
 
 Use realistic supplied content and comparable edge states. Preserve original sources; create alternatives only in an authorized separate destination. Do not overwrite production designs or modify shared components, variables, styles or published libraries as a side effect of exploration.
@@ -123,4 +125,4 @@ Read [figma-handoff.md](references/figma-handoff.md) before handing off a select
 
 If Figma writing is already within the user's request, proceed within that scope and use the available construction guidance. Otherwise deliver the ready-to-build handoff without mutating Figma. If tooling cannot create or verify editable layers, state that limitation and deliver the spec/assets; never claim that a raster mockup or unverified import is complete editable Figma.
 
-Before finishing, verify the requested intensity distribution, focus and fidelity (at `prototype`, that each direction's primary interactions work), each direction's lead layer, distinct hypotheses and meaningful differences within the allowed levels and layers, source fidelity, current constraints, fair comparison, explicit uncertainty, and a usable handoff. Separate visual fidelity checks from structural editability checks.
+Before finishing, verify the requested intensity distribution, focus and fidelity (at `prototype`, that `check-prototype.mjs` passes), each direction's lead layer, distinct hypotheses and meaningful differences within the allowed levels and layers, source fidelity, current constraints, fair comparison, explicit uncertainty, and a usable handoff. Separate visual fidelity checks from structural editability checks.

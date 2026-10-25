@@ -34,6 +34,9 @@ Each exploration round is saved as data, so a later session can seed from it, co
       "screen": "d1"
     }
   ],
+  "checks": [
+    { "name": "move card to Interview", "action": "drag", "target": "[data-card='acme']", "to": "[data-column='interview']" }
+  ],
   "recommendation": { "direction": "D2", "why": "…", "counterargument": "…", "nextValidation": "five-second test with 5 recruiters" },
   "prototype": { "url": "https://claude.ai/...", "file": "explorations/dashboard/round-2.html" },
   "selected": null
@@ -41,6 +44,7 @@ Each exploration round is saved as data, so a later session can seed from it, co
 ```
 
 - `screen` is the id the prototype's direction switcher uses, so construction can open the right tab for reference screenshots.
+- `checks` is optional: interactions the prototype checker cannot find from `data-check` attributes alone (see prototype-contract.md).
 - `selected` stays `null` until the user picks a direction. A recommendation is not a selection.
 
 ## Seeding from a round

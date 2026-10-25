@@ -30,7 +30,7 @@ Give construction a checklist instead of leaving it to rebuild one from the prot
 
 - **Frames:** every direction × viewport × mode the prototype supports, marked required or optional, plus states worth drawing (hover, dragging, empty, expanded).
 - **Signature details:** for each direction, the distinctive treatments that make it that direction, such as restyled controls, connectors, numerals, shadows and color fields. Note which existing components cannot produce them as configured.
-- **References:** screenshots of the prototype for each required frame, in the matching state, viewport and mode, so every built frame has something to be compared against.
+- **References:** screenshots of the prototype for each required frame, in the matching state, viewport and mode, so every built frame has something to be compared against. `scripts/check-prototype.mjs --shots --viewports 1440x900,390x844` produces them per direction, viewport and mode.
 
 ## Verification and acceptance
 

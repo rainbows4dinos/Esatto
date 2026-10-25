@@ -303,7 +303,10 @@ lr-design-exploration/
 └── references/
     ├── direction-framework.md   how to form and evaluate directions
     ├── figma-handoff.md         what a buildable handoff must include
-    └── round-file.md            saving a round so later rounds and sessions can seed from it
+    ├── round-file.md            saving a round so later rounds and sessions can seed from it
+    └── prototype-contract.md    attributes the prototype checker relies on
+└── scripts/
+    └── check-prototype.mjs      clicks through every direction before publishing
 lr-figma-construction/
 ├── SKILL.md
 └── references/
@@ -364,6 +367,7 @@ Uploaded skills are copies. After changing a skill, rebuild its zip and upload i
 
 - Claude Code.
 - Figma’s MCP server, connected to Claude Code, for anything that reads or writes Figma. Without it, `lr-design-exploration` can still produce directions and a written handoff.
+- Node with Playwright (`npm i playwright` in any scratch folder) for the prototype checker and the sync screenshot script, and Python 3 for the sync scripts. Both are standard library otherwise.
 - For `lr-design-system-sync`, Code Connect is optional. It needs a Figma Organization or Enterprise plan; on other plans the skill keeps its own component map in the target repo.
 
 ## About the `lr-` prefix
