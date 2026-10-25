@@ -310,9 +310,7 @@ lr-design-exploration/
 lr-figma-construction/
 ├── SKILL.md
 └── references/
-    ├── auto-layout.md
-    ├── design-tokens.md
-    ├── component-practices.md
+    ├── construction-rules.md    layout, components, tokens, anti-patterns, verification checklist
     └── build-manifest.md        frame list and status file
 lr-design-system-sync/
 ├── SKILL.md

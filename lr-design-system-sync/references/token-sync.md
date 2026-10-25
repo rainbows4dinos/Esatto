@@ -1,6 +1,6 @@
 # Token and style sync
 
-Write Figma variables and styles into the code's existing token format. Follow the naming, units, and mode conventions recorded in `design-sync/config.json`; do not introduce a new token architecture. For semantic versus primitive rules, see `lr-figma-construction/references/design-tokens.md` if installed.
+Write Figma variables and styles into the code's existing token format. Follow the naming, units, and mode conventions recorded in `design-sync/config.json`; do not introduce a new token architecture. Token rules shared by all skills are in [conventions.md](conventions.md).
 
 Work in this order, one ledger category at a time: variables, text styles, effect styles, paint styles. Update rows as each group finishes.
 
