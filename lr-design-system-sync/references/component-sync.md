@@ -61,7 +61,8 @@ Render with a headless browser script saved as `design-sync/scripts/shot.mjs` th
 
 - Render each variant in the preview (Storybook, dev route, or a test page) at the Figma frame's size and screenshot it, with Playwright or the available browser.
 - Compare against the Figma screenshots: layout, spacing, alignment, child order, type. Note differences that remain and why (font rendering, code-owned behavior).
-- Run the type check.
+- Run the type check. If the project's checker ships a platform-specific binary that does not match the agent's shell, install the same version outside the repo and run it against the project; do not skip it or leave it to the user.
+- When inserting helpers into an existing file, never place them between a doc comment and the function it documents. In JSDoc-typed code that silently drops the types.
 - Record the evidence (screenshot paths, check results) in the row and set the status.
 
 ## Auto layout to CSS
