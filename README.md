@@ -326,6 +326,8 @@ lr-design-system-sync/
     ├── ledger.py                render, status, set, add, log, mirror
     ├── bump-cache.py, shot.mjs
     └── figma/                   use_figma code: inventory read, hygiene scan, mirror
+.claude-plugin/
+└── marketplace.json             lists the repo as a Claude Code plugin marketplace
 shared/
 └── conventions.md               rules every skill follows; copied into each skill's references/
 scripts/
@@ -337,7 +339,17 @@ Each skill also carries `references/conventions.md`, a copy of `shared/conventio
 
 ## Installation
 
-Claude Code loads personal skills from `~/.claude/skills/<skill-name>/SKILL.md`, one level deep. Clone this repository anywhere, then link or copy each skill folder into that directory.
+**Plugin (easiest, with updates):** in Claude Code, run
+
+```text
+/plugin install design-agent-skills --marketplace rainbows4dinos/design-agent-skills
+```
+
+That adds this repository as a plugin marketplace and installs all four skills in one step (Claude Code 2.1.275 or later; on earlier versions run `/plugin marketplace add rainbows4dinos/design-agent-skills`, then `/plugin install design-agent-skills@rainbows4dinos`). Plugin skills are namespaced, so they appear as `/design-agent-skills:lr-design-exploration` and so on. To pick up new versions, run `claude plugin marketplace update rainbows4dinos`, then `claude plugin update design-agent-skills@rainbows4dinos`, and restart.
+
+Use either the plugin or the link/copy install below, not both, or each skill loads twice.
+
+**Skills folder:** Claude Code also loads personal skills from `~/.claude/skills/<skill-name>/SKILL.md`, one level deep. Clone this repository anywhere, then link or copy each skill folder into that directory.
 
 **Link (edits in the clone take effect immediately):**
 
