@@ -1,26 +1,36 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "rainbows4dinos",
-  "description": "Larry Reynolds's design agent skills for Figma and code",
+  "description": "rainbows4dinos design agent skills",
   "owner": {
     "name": "Larry Reynolds",
     "url": "https://github.com/rainbows4dinos"
   },
   "plugins": [
     {
-      "name": "design-agent-skills",
+      "name": "esatto",
+      "displayName": "Esatto",
       "source": "./",
-      "description": "Inspect Figma files, explore design directions, build editable Figma layers, and sync a Figma design system into code.",
-      "author": { "name": "Larry Reynolds", "url": "https://github.com/rainbows4dinos" },
+      "description": "Design agent skills that check their work: inspect Figma files, explore design directions, build editable Figma layers, and sync a Figma design system into code.",
+      "author": {
+        "name": "Larry Reynolds",
+        "url": "https://github.com/rainbows4dinos"
+      },
       "homepage": "https://github.com/rainbows4dinos/design-agent-skills",
       "repository": "https://github.com/rainbows4dinos/design-agent-skills",
       "license": "MIT",
-      "keywords": ["figma", "design", "design-system", "auto-layout", "design-tokens"],
+      "keywords": [
+        "figma",
+        "design",
+        "design-system",
+        "auto-layout",
+        "design-tokens"
+      ],
       "skills": [
-        "./lr-figma-inspection",
-        "./lr-design-exploration",
-        "./lr-figma-construction",
-        "./lr-design-system-sync"
+        "./inspect-figma",
+        "./explore-directions",
+        "./build-in-figma",
+        "./sync-design-system"
       ]
     }
   ]

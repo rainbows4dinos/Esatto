@@ -1,11 +1,11 @@
 ---
-name: lr-figma-construction
+name: build-in-figma
 description: Build editable, structurally sound Figma designs from a prototype, exploration, screenshot or spec, using the existing design system, components, variables and native auto layout. Use when asked to put a design into Figma, build or rebuild frames, or turn an exploration direction into editable layers.
 ---
 
 # Figma Construction
 
-Turn a source design into native, editable Figma layers that look right and behave right. Use `lr-figma-inspection` for the baseline and `lr-design-exploration` handoffs as input when available; otherwise apply the same principles directly. The goal is a file a designer can keep working in, matched to the source and verified frame by frame.
+Turn a source design into native, editable Figma layers that look right and behave right. Use `inspect-figma` for the baseline and `explore-directions` handoffs as input when available; otherwise apply the same principles directly. The goal is a file a designer can keep working in, matched to the source and verified frame by frame.
 
 Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
 

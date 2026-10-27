@@ -1,5 +1,5 @@
 ---
-name: lr-design-system-sync
+name: sync-design-system
 description: Sync a Figma design system into a codebase, item by item, tracked in a persistent ledger. Use to audit drift between Figma and code, update tokens and text styles in CSS, or bring code components in line with updated Figma structure, layout, and variants.
 ---
 

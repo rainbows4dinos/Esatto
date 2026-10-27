@@ -1,6 +1,6 @@
 # Design sync scripts
 
-Helpers for `lr-design-system-sync`. Copy this folder into the target repo as `design-sync/scripts/` at setup, then run everything from the repo root. Python scripts use the standard library only. Every script reads `design-sync/config.json` and accepts `--dir` (the design-sync folder) and `--root` (the repo root) to override the defaults.
+Helpers for `sync-design-system`. Copy this folder into the target repo as `design-sync/scripts/` at setup, then run everything from the repo root. Python scripts use the standard library only. Every script reads `design-sync/config.json` and accepts `--dir` (the design-sync folder) and `--root` (the repo root) to override the defaults.
 
 | Script | Phase | What it does |
 |---|---|---|

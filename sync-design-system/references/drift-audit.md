@@ -1,6 +1,6 @@
 # Drift audit
 
-Produce a complete ledger before any code changes. The audit inventories both sides, matches them, and classifies every difference. For Figma hygiene detail, use `lr-figma-inspection`'s checklist if it is installed; the same read-only rules apply here.
+Produce a complete ledger before any code changes. The audit inventories both sides, matches them, and classifies every difference. For Figma hygiene detail, use `inspect-figma`'s checklist if it is installed; the same read-only rules apply here.
 
 ## 1. Inventory Figma
 
@@ -18,7 +18,7 @@ If a read paginates or truncates, keep reading until the count is complete. A pa
 
 Read mechanics are in "Reading Figma" in [conventions.md](conventions.md). For the sync specifically: aliases are what the code should mirror, so record the target name; and record the read date and the code commit, since Figma does not expose last-modified.
 
-`scripts/figma/read-inventory.js` does this: set its `CATEGORY` (and `PAGE_IDS` for components), run it once per category, and merge each result into the inventory file. A recent `figma-baseline.json` from `lr-figma-inspection` uses the same format and can seed the inventory; re-read any category it left out or that changed since. Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
+`scripts/figma/read-inventory.js` does this: set its `CATEGORY` (and `PAGE_IDS` for components), run it once per category, and merge each result into the inventory file. A recent `figma-baseline.json` from `inspect-figma` uses the same format and can seed the inventory; re-read any category it left out or that changed since. Save the result to `design-sync/figma-inventory.json`. Later runs diff against it, and the comparison in step 4 runs on it.
 
 ## 2. Inventory code
 

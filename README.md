@@ -1,4 +1,6 @@
-# Design Agent Skills
+# Esatto
+
+Design agent skills by [rainbows4dinos](https://github.com/rainbows4dinos). *Esatto* is Italian for "exactly": the skills check their work against the source instead of claiming it.
 
 Four Claude Code skills for product design work in Figma: inspect an existing design, explore alternative directions, build the chosen direction as editable Figma layers, and sync the design system into code.
 
@@ -8,10 +10,10 @@ They are written to work inside an existing design system rather than around it.
 
 | Skill | What it does | Changes Figma? |
 |---|---|---|
-| [`lr-figma-inspection`](lr-figma-inspection/SKILL.md) | Audits a Figma file or selection: components, variables and modes, styles, auto layout and conventions. Produces an evidence-backed baseline that separates observed facts from inferences and unknowns. | No. Read-only by design. |
-| [`lr-design-exploration`](lr-design-exploration/SKILL.md) | Develops substantively different design directions, each with a testable hypothesis, rationale, tradeoffs and evaluation criteria, then prepares an editable Figma handoff. | Only when the request authorizes it. |
-| [`lr-figma-construction`](lr-figma-construction/SKILL.md) | Builds designs in Figma from native, editable layers using existing components, tokens and nested auto layout. Agrees a build list of frames, viewports and modes first, then verifies every frame against the source. | Yes, within the authorized destination. |
-| [`lr-design-system-sync`](lr-design-system-sync/SKILL.md) | Syncs Figma variables, text and effect styles, and components into a codebase, one item at a time, tracked in a ledger committed with the code so nothing is silently skipped. | Only the optional `Sync status` ledger page. |
+| [`inspect-figma`](inspect-figma/SKILL.md) | Audits a Figma file or selection: components, variables and modes, styles, auto layout and conventions. Produces an evidence-backed baseline that separates observed facts from inferences and unknowns. | No. Read-only by design. |
+| [`explore-directions`](explore-directions/SKILL.md) | Develops substantively different design directions, each with a testable hypothesis, rationale, tradeoffs and evaluation criteria, then prepares an editable Figma handoff. | Only when the request authorizes it. |
+| [`build-in-figma`](build-in-figma/SKILL.md) | Builds designs in Figma from native, editable layers using existing components, tokens and nested auto layout. Agrees a build list of frames, viewports and modes first, then verifies every frame against the source. | Yes, within the authorized destination. |
+| [`sync-design-system`](sync-design-system/SKILL.md) | Syncs Figma variables, text and effect styles, and components into a codebase, one item at a time, tracked in a ledger committed with the code so nothing is silently skipped. | Only the optional `Sync status` ledger page. |
 
 They work best in sequence, but each one also stands alone. Each step saves a file the next one reads, so nothing has to be re-read from Figma or rebuilt from memory, and work can resume in a new session:
 
@@ -29,16 +31,16 @@ figma-baseline.json   round file              build manifest              design
 | `figma-build/<name>.json` | exploration handoff (all frames `pending`), construction | construction, to resume and to prove every frame was verified |
 | `design-sync/ledger.json` | sync | sync, to resume; `ledger.py status` answers "where are we?" |
 
-`lr-design-system-sync` usually runs separately, whenever the Figma library changes and the code needs to catch up.
+`sync-design-system` usually runs separately, whenever the Figma library changes and the code needs to catch up.
 
-`lr-design-exploration` refers to the other two by name and falls back to the same principles when they aren't installed.
+`explore-directions` refers to the other two by name and falls back to the same principles when they aren't installed.
 
 ## Quick start
 
 Point the exploration skill at a design and say what you want to improve:
 
 ```text
-Use lr-design-exploration on the dashboard (Figma link).
+Use explore-directions on the dashboard (Figma link).
 ```
 
 If you haven't said how far to go, what can change, or how many directions you want, Claude asks first, in up to three quick multiple-choice questions with the defaults listed first. Settings you already gave, in plain language or as `intensity:` / `focus:`, are never asked again. After an earlier round, it also offers to start from one of the previous directions.
@@ -57,7 +59,7 @@ Everything below is optional. Each setting can be typed directly, described in p
 
 ### Exploration intensity
 
-`lr-design-exploration` controls how far each direction departs from the current experience:
+`explore-directions` controls how far each direction departs from the current experience:
 
 | Intensity | What it explores |
 |---|---|
@@ -135,7 +137,7 @@ How a seeded round works:
 
 ### Output fidelity
 
-By default, `lr-design-exploration` delivers one interactive comparison artifact. You can switch between directions (and the baseline), each direction works on the same shared data, and the source's main interactions function: filters, drag and drop, expand and collapse, light and dark mode where the source has them.
+By default, `explore-directions` delivers one interactive comparison artifact. You can switch between directions (and the baseline), each direction works on the same shared data, and the source's main interactions function: filters, drag and drop, expand and collapse, light and dark mode where the source has them.
 
 | Fidelity | Output |
 |---|---|
@@ -150,12 +152,12 @@ Give me quick wireframes for three directions
 
 ## Usage recipes
 
-Name a skill directly ("Use lr-design-exploration to…"), run it as a slash command in Claude Code (`/lr-design-exploration`), or describe the task and let it trigger. Settings can go anywhere in the prompt.
+Name a skill directly ("Use explore-directions to…"), run it as a slash command in Claude Code (`/explore-directions`), or describe the task and let it trigger. Settings can go anywhere in the prompt.
 
 **Same screen, bold new looks.** Keeps the structure and pushes the visual language.
 
 ```text
-Use lr-design-exploration on the dashboard (Figma link).
+Use explore-directions on the dashboard (Figma link).
 Explore four directions, intensity: 3, focus: visual.
 Keep the layout structure and all content.
 ```
@@ -202,9 +204,9 @@ The logo can change; the product name stays.
 **The full chain.**
 
 ```text
-1. Use lr-figma-inspection on (Figma link) and summarize the baseline.
-2. Use lr-design-exploration: four directions, intensity: mixed, focus: all.
-3. I pick direction 2. Use lr-figma-construction to build it on a new
+1. Use inspect-figma on (Figma link) and summarize the baseline.
+2. Use explore-directions: four directions, intensity: mixed, focus: all.
+3. I pick direction 2. Use build-in-figma to build it on a new
    page called "Exploration – Direction 2".
 ```
 
@@ -218,19 +220,19 @@ Run step 1 alone, then decide on the rest. Construction only writes to Figma whe
 
 ## Design system sync
 
-Run `lr-design-system-sync` from inside the codebase you want to sync. Ask in plain language, or call it directly with `/lr-design-system-sync` followed by the request. The skill keeps its state in a `design-sync/` folder in that repo (config, Figma snapshot, component map, ledger), so any session can pick up where the last one stopped.
+Run `sync-design-system` from inside the codebase you want to sync. Ask in plain language, or call it directly with `/sync-design-system` followed by the request. The skill keeps its state in a `design-sync/` folder in that repo (config, Figma snapshot, component map, ledger), so any session can pick up where the last one stopped.
 
 **Audit**
 
 ```text
-/lr-design-system-sync audit this codebase against the Figma library
+/sync-design-system audit this codebase against the Figma library
 https://www.figma.com/design/<fileKey>/<fileName>
 ```
 
 **Audit with the optional Figma steps**
 
 ```text
-/lr-design-system-sync run an audit, fix any Figma hygiene issues that match
+/sync-design-system run an audit, fix any Figma hygiene issues that match
 the scale exactly, and mirror the ledger to the Sync status page
 ```
 
@@ -239,15 +241,15 @@ Hygiene fixes bind unbound padding, gap and radius values to existing variables.
 **Token sync**
 
 ```text
-/lr-design-system-sync sync tokens and text styles from the ledger
+/sync-design-system sync tokens and text styles from the ledger
 ```
 
 **Component sync**
 
 ```text
-/lr-design-system-sync start component sync with the next batch
-/lr-design-system-sync sync Button and Chip only
-/lr-design-system-sync continue from the ledger
+/sync-design-system start component sync with the next batch
+/sync-design-system sync Button and Chip only
+/sync-design-system continue from the ledger
 ```
 
 `continue from the ledger` is how you resume in a new session. The agent reads `design-sync/ledger.md` and starts at the first `pending` row.
@@ -255,26 +257,26 @@ Hygiene fixes bind unbound padding, gap and radius values to existing variables.
 **Decisions**
 
 ```text
-/lr-design-system-sync for the open decisions: add typography primitives,
+/sync-design-system for the open decisions: add typography primitives,
 skip Avatar, build Company Avatar
 ```
 
 **After changing Figma**
 
 ```text
-/lr-design-system-sync I updated Button and Alert in Figma, re-audit what changed
+/sync-design-system I updated Button and Alert in Figma, re-audit what changed
 ```
 
 **Status**
 
 ```text
-/lr-design-system-sync what's left in the ledger?
-/lr-design-system-sync refresh the Figma mirror
+/sync-design-system what's left in the ledger?
+/sync-design-system refresh the Figma mirror
 ```
 
 **Helper scripts**
 
-The skill ships its scripts in `lr-design-system-sync/scripts/` and copies them to `design-sync/scripts/` in your repo at setup, so every project runs the same tested code. The agent runs them, but you can too, from the repo root:
+The skill ships its scripts in `sync-design-system/scripts/` and copies them to `design-sync/scripts/` in your repo at setup, so every project runs the same tested code. The agent runs them, but you can too, from the repo root:
 
 ```bash
 python3 design-sync/scripts/ledger.py status            # counts, open rows, next batch
@@ -285,20 +287,20 @@ python3 design-sync/scripts/bump-cache.py 20261025-batch-3 --git   # ?v= revisio
 python3 design-sync/scripts/ledger.py mirror            # code for the Figma ledger mirror
 ```
 
-`ledger.md` is rendered from `ledger.json` and refuses to render when row counts stop matching the Figma inventory. See [the scripts README](lr-design-system-sync/scripts/README.md) for the config keys.
+`ledger.md` is rendered from `ledger.json` and refuses to render when row counts stop matching the Figma inventory. See [the scripts README](sync-design-system/scripts/README.md) for the config keys.
 
 ## What's inside
 
 Each skill is a folder with a `SKILL.md` and supporting references that Claude reads when relevant:
 
 ```
-lr-figma-inspection/
+inspect-figma/
 ├── SKILL.md
 └── references/
     ├── inspection-checklist.md
     ├── report-template.md
     └── baseline-json.md         machine-readable baseline format
-lr-design-exploration/
+explore-directions/
 ├── SKILL.md
 └── references/
     ├── direction-framework.md   how to form and evaluate directions
@@ -307,12 +309,12 @@ lr-design-exploration/
     └── prototype-contract.md    attributes the prototype checker relies on
 └── scripts/
     └── check-prototype.mjs      clicks through every direction before publishing
-lr-figma-construction/
+build-in-figma/
 ├── SKILL.md
 └── references/
     ├── construction-rules.md    layout, components, tokens, anti-patterns, verification checklist
     └── build-manifest.md        frame list and status file
-lr-design-system-sync/
+sync-design-system/
 ├── SKILL.md
 └── references/
     ├── source-of-truth.md       which side owns each area
@@ -342,10 +344,10 @@ Each skill also carries `references/conventions.md`, a copy of `shared/conventio
 **Plugin (easiest, with updates):** in Claude Code, run
 
 ```text
-/plugin install design-agent-skills --marketplace rainbows4dinos/design-agent-skills
+/plugin install esatto --marketplace rainbows4dinos/design-agent-skills
 ```
 
-That adds this repository as a plugin marketplace and installs all four skills in one step (Claude Code 2.1.275 or later; on earlier versions run `/plugin marketplace add rainbows4dinos/design-agent-skills`, then `/plugin install design-agent-skills@rainbows4dinos`). Plugin skills are namespaced, so they appear as `/design-agent-skills:lr-design-exploration` and so on. To pick up new versions, run `claude plugin marketplace update rainbows4dinos`, then `claude plugin update design-agent-skills@rainbows4dinos`, and restart.
+That adds this repository as a plugin marketplace and installs all four skills in one step (Claude Code 2.1.275 or later; on earlier versions run `/plugin marketplace add rainbows4dinos/design-agent-skills`, then `/plugin install esatto@rainbows4dinos`). Plugin skills are namespaced, so they appear as `/esatto:explore-directions` and so on. To pick up new versions, run `claude plugin marketplace update rainbows4dinos`, then `claude plugin update esatto@rainbows4dinos`, and restart.
 
 Use either the plugin or the link/copy install below, not both, or each skill loads twice.
 
@@ -356,24 +358,24 @@ Use either the plugin or the link/copy install below, not both, or each skill lo
 ```bash
 git clone https://github.com/rainbows4dinos/design-agent-skills.git ~/Dev/design-agent-skills
 cd ~/Dev/design-agent-skills
-for s in lr-*; do ln -s "$PWD/$s" ~/.claude/skills/"$s"; done
+for f in */SKILL.md; do s=$(dirname "$f"); ln -s "$PWD/$s" ~/.claude/skills/"$s"; done
 ```
 
 **Copy:**
 
 ```bash
-cp -R lr-* ~/.claude/skills/
+cp -R inspect-figma explore-directions build-in-figma sync-design-system ~/.claude/skills/
 ```
 
 To scope the skills to one project, put them in that project's `.claude/skills/` directory instead.
 
-Run `/reload-skills` (or start a new session), then confirm the four `lr-` skills appear in the skills list.
+Run `/reload-skills` (or start a new session), then confirm the four skills appear in the skills list.
 
 **Claude app (claude.ai and desktop):** upload a zip per skill under Settings > Capabilities > Skills. Build the zips from the current repo:
 
 ```bash
 scripts/package.sh                          # every skill
-scripts/package.sh lr-design-system-sync    # just one
+scripts/package.sh sync-design-system    # just one
 ```
 
 Uploaded skills are copies. After changing a skill, rebuild its zip and upload it again, or the app keeps running the old version. Linked Claude Code installs pick up changes on reload.
@@ -381,13 +383,15 @@ Uploaded skills are copies. After changing a skill, rebuild its zip and upload i
 ## Requirements
 
 - Claude Code.
-- Figma’s MCP server, connected to Claude Code, for anything that reads or writes Figma. Without it, `lr-design-exploration` can still produce directions and a written handoff.
+- Figma’s MCP server, connected to Claude Code, for anything that reads or writes Figma. Without it, `explore-directions` can still produce directions and a written handoff.
 - Node with Playwright (`npm i playwright` in any scratch folder) for the prototype checker and the sync screenshot script, and Python 3 for the sync scripts. Both are standard library otherwise.
-- For `lr-design-system-sync`, Code Connect is optional. It needs a Figma Organization or Enterprise plan; on other plans the skill keeps its own component map in the target repo.
+- For `sync-design-system`, Code Connect is optional. It needs a Figma Organization or Enterprise plan; on other plans the skill keeps its own component map in the target repo.
 
-## About the `lr-` prefix
+## About the names
 
-The prefix marks these as personal skills so they are easy to tell apart from installed ones in Claude Code's skills list. To use your own prefix, or none, rename each folder and its `name:` field. Also update the cross-references in `lr-design-exploration/SKILL.md`, `lr-figma-inspection/SKILL.md` and `lr-design-system-sync/references/`.
+Skill names are verb-first and say what each one does: `inspect-figma`, `explore-directions`, `build-in-figma`, `sync-design-system`. In Claude Code the plugin adds the `esatto:` namespace (`/esatto:inspect-figma`), so they never clash with other skills. In the Claude app and in a skills folder there is no namespace, and the names stand on their own; they avoid the `figma-` prefix Figma uses for its official skills.
+
+To rename a skill, rename its folder and its `name:` field, then search the repo for the old name to update cross-references, `.claude-plugin/marketplace.json`, and `shared/conventions.md` (followed by `scripts/sync-shared.sh`).
 
 ## License
 

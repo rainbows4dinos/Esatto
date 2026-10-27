@@ -36,7 +36,7 @@ A category that was not inspected is left out. An empty object means it was insp
 }
 ```
 
-- `variables`, `textStyles`, `effectStyles`, `paintStyles`, and `components` use the same format as `lr-design-system-sync`'s `figma-inventory.json`. If that skill is installed, its `scripts/figma/read-inventory.js` and `scripts/figma/hygiene-scan.js` produce them; both are read-only.
+- `variables`, `textStyles`, `effectStyles`, `paintStyles`, and `components` use the same format as `sync-design-system`'s `figma-inventory.json`. If that skill is installed, its `scripts/figma/read-inventory.js` and `scripts/figma/hygiene-scan.js` produce them; both are read-only.
 - Values: `#rrggbb` or `#rrggbbaa`, numbers in px, `@name` for an alias, `@name 80%` for an alias with opacity. Line height is px, `N%`, or `auto`.
 - Finding `status` is `observed`, `inferred`, `proposed`, `unknown`, or `unverified` (a value the API cannot read, such as a binding inside a nested instance). `area` is `components`, `variables`, `styles`, `layout`, `accessibility`, or `conventions`.
 - Every finding has a node, component key, variable or style name, or says `"node": "screenshot only"`.

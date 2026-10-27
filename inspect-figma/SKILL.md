@@ -1,11 +1,11 @@
 ---
-name: lr-figma-inspection
+name: inspect-figma
 description: Inspect an existing Figma file or selection without changing it. Use to audit components, variables, styles, auto layout, modes, and design-system conventions, or establish an evidence-backed baseline before exploration or construction.
 ---
 
 # Figma Inspection
 
-Build a reliable account of what exists, what is reusable, and what remains unknown. This skill inspects; `lr-design-exploration` develops alternatives and `lr-figma-construction` builds editable artifacts. Neither companion is required to produce an inspection report.
+Build a reliable account of what exists, what is reusable, and what remains unknown. This skill inspects; `explore-directions` develops alternatives and `build-in-figma` builds editable artifacts. Neither companion is required to produce an inspection report.
 
 Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
 

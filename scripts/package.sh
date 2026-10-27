@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Rebuild one zip per skill in zips/, for uploading to claude.ai (Settings > Capabilities > Skills).
 # Run after any change to a skill, then re-upload the changed zips. Uploaded copies do not update themselves.
-#   scripts/package.sh            all lr-* skills
-#   scripts/package.sh lr-figma-inspection lr-design-system-sync
+#   scripts/package.sh            every skill (each folder with a SKILL.md)
+#   scripts/package.sh inspect-figma sync-design-system
 set -euo pipefail
 cd "$(dirname "$0")/.."
 scripts/sync-shared.sh --check || { echo 'error: shared/conventions.md copies are stale; run scripts/sync-shared.sh' >&2; exit 1; }
 mkdir -p zips
 skills=("$@")
-[ ${#skills[@]} -eq 0 ] && skills=(lr-*/)
+[ ${#skills[@]} -eq 0 ] && for f in */SKILL.md; do skills+=("$(dirname "$f")"); done
 for s in "${skills[@]}"; do
   s="${s%/}"
   [ -f "$s/SKILL.md" ] || { echo "skip $s (no SKILL.md)"; continue; }

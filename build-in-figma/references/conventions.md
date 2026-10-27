@@ -1,9 +1,9 @@
 # Shared conventions
 
-<!-- Master copy: shared/conventions.md in the design-agent-skills repo. Each lr- skill carries an identical copy in
+<!-- Master copy: shared/conventions.md in the design-agent-skills repo. Each skill carries an identical copy in
      references/conventions.md so it works when installed alone. Edit the master, then run scripts/sync-shared.sh. -->
 
-These apply to every `lr-` skill: inspection, exploration, construction, and design system sync. A skill's own instructions add to them and win where they are more specific.
+These apply to every Esatto skill: `inspect-figma`, `explore-directions`, `build-in-figma`, and `sync-design-system`. A skill's own instructions add to them and win where they are more specific.
 
 ## Evidence
 

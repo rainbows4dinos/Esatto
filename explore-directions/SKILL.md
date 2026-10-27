@@ -1,11 +1,11 @@
 ---
-name: lr-design-exploration
+name: explore-directions
 description: Develop substantively different product design directions with explicit hypotheses, rationale, tradeoffs, and evaluation criteria. Use to explore product, UX, UI, or visual design alternatives at a chosen intensity while preserving source intent and current system constraints, then prepare an editable Figma handoff.
 ---
 
 # Design Exploration
 
-Explore different ways to solve the user's design problem, then make the alternatives comparable and buildable. Stay product agnostic. Use `lr-figma-inspection` for an existing Figma baseline and `lr-figma-construction` for authorized construction when available; otherwise follow the same evidence and native-editability principles directly.
+Explore different ways to solve the user's design problem, then make the alternatives comparable and buildable. Stay product agnostic. Use `inspect-figma` for an existing Figma baseline and `build-in-figma` for authorized construction when available; otherwise follow the same evidence and native-editability principles directly.
 
 Shared rules for evidence, Figma reads, value notation, tokens, strokes, and handoff files are in [conventions.md](references/conventions.md); read it once per session before the first Figma read or write.
 
@@ -29,7 +29,7 @@ Identify the user task, audience, target device/context, intended outcome, and e
 
 List what must remain faithful: required content, data semantics, brand assets, workflow obligations, navigation contracts, component behavior, and any visual intent the user asked to preserve. If the request is faithful reproduction, treat alternatives as optional proposals outside the faithful baseline; do not silently redesign it. When redesign is requested, state the fidelity contract at the level of intent and required behavior rather than freezing every pixel.
 
-Use current available system evidence: components, variants, tokens, modes, layout rules, platform/runtime constraints, and implementation capacity. When an inspection baseline (`figma-baseline.json` from `lr-figma-inspection`) exists, start from it. Recheck stale inspection results where material. A screenshot is visual evidence, not proof of tokens or component availability. Mark missing access, unknown capabilities and assumptions. Ask only when uncertainty blocks a consequential decision; continue independent work with labeled assumptions.
+Use current available system evidence: components, variants, tokens, modes, layout rules, platform/runtime constraints, and implementation capacity. When an inspection baseline (`figma-baseline.json` from `inspect-figma`) exists, start from it. Recheck stale inspection results where material. A screenshot is visual evidence, not proof of tokens or component availability. Mark missing access, unknown capabilities and assumptions. Ask only when uncertainty blocks a consequential decision; continue independent work with labeled assumptions.
 
 ## Set exploration intensity
 
