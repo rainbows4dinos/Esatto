@@ -344,10 +344,10 @@ Each skill also carries `references/conventions.md`, a copy of `shared/conventio
 **Plugin (easiest, with updates):** in Claude Code, run
 
 ```text
-/plugin install esatto --marketplace rainbows4dinos/design-agent-skills
+/plugin install esatto --marketplace rainbows4dinos/Esatto
 ```
 
-That adds this repository as a plugin marketplace and installs all four skills in one step (Claude Code 2.1.275 or later; on earlier versions run `/plugin marketplace add rainbows4dinos/design-agent-skills`, then `/plugin install esatto@rainbows4dinos`). Plugin skills are namespaced, so they appear as `/esatto:explore-directions` and so on. To pick up new versions, run `claude plugin marketplace update rainbows4dinos`, then `claude plugin update esatto@rainbows4dinos`, and restart.
+That adds this repository as a plugin marketplace and installs all four skills in one step (Claude Code 2.1.275 or later; on earlier versions run `/plugin marketplace add rainbows4dinos/Esatto`, then `/plugin install esatto@rainbows4dinos`). Plugin skills are namespaced, so they appear as `/esatto:explore-directions` and so on. To pick up new versions, run `claude plugin marketplace update rainbows4dinos`, then `claude plugin update esatto@rainbows4dinos`, and restart.
 
 Use either the plugin or the link/copy install below, not both, or each skill loads twice.
 
@@ -356,8 +356,8 @@ Use either the plugin or the link/copy install below, not both, or each skill lo
 **Link (edits in the clone take effect immediately):**
 
 ```bash
-git clone https://github.com/rainbows4dinos/design-agent-skills.git ~/Dev/design-agent-skills
-cd ~/Dev/design-agent-skills
+git clone https://github.com/rainbows4dinos/Esatto.git ~/Dev/Esatto
+cd ~/Dev/Esatto
 for f in */SKILL.md; do s=$(dirname "$f"); ln -s "$PWD/$s" ~/.claude/skills/"$s"; done
 ```
 
