@@ -387,12 +387,6 @@ Uploaded skills are copies. After changing a skill, rebuild its zip and upload i
 - Node with Playwright (`npm i playwright` in any scratch folder) for the prototype checker and the sync screenshot script, and Python 3 for the sync scripts. Both are standard library otherwise.
 - For `sync-design-system`, Code Connect is optional. It needs a Figma Organization or Enterprise plan; on other plans the skill keeps its own component map in the target repo.
 
-## About the names
-
-Skill names are verb-first and say what each one does: `inspect-figma`, `explore-directions`, `build-in-figma`, `sync-design-system`. In Claude Code the plugin adds the `esatto:` namespace (`/esatto:inspect-figma`), so they never clash with other skills. In the Claude app and in a skills folder there is no namespace, and the names stand on their own; they avoid the `figma-` prefix Figma uses for its official skills.
-
-To rename a skill, rename its folder and its `name:` field, then search the repo for the old name to update cross-references, `.claude-plugin/marketplace.json`, and `shared/conventions.md` (followed by `scripts/sync-shared.sh`).
-
 ## License
 
 [MIT](LICENSE)
