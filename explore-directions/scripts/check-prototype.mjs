@@ -8,6 +8,7 @@
 //   - switching by click and by number key shows that direction, and it renders real content
 //   - every primary interaction ([data-check] controls, or the round file's "checks") changes the page
 //   - the first controls reached with Tab show a visible focus style
+//   - selects drop native chrome and keep right padding wider than left, to clear the chevron
 //   - no uncaught errors or console errors
 // With --shots, saves a screenshot per direction x viewport x mode, named <direction>-<viewport>-<mode>.png,
 // which construction uses as frame references. Exit code 1 when any check fails.
@@ -139,6 +140,15 @@ for (const [i, id] of ids.entries()) {
   }
   checked === 0 ? fail(`${label}: focus`, 'Tab reached no control in this direction')
     : invisible.length ? fail(`${label}: focus`, 'no visible focus style on ' + invisible.join(', ')) : pass(`${label}: focus`, `${checked} tab stops`);
+
+  // Selects: no native chrome, and right padding must clear the chevron. Opt out with data-native.
+  const selects = await panel.$$eval('select:not([data-native])', (els) => els.filter((e) => e.getBoundingClientRect().width > 0).map((e) => {
+    const c = getComputedStyle(e);
+    const name = e.getAttribute('data-check') || e.name || e.id || (e.options[e.selectedIndex] || {}).text || 'select';
+    return { name, native: c.appearance !== 'none' && c.webkitAppearance !== 'none', l: parseFloat(c.paddingLeft), r: parseFloat(c.paddingRight) };
+  }));
+  const badSelects = selects.filter((x) => x.native || x.r <= x.l).map((x) => x.native ? `${x.name} (native chrome)` : `${x.name} (padding ${x.l}/${x.r}px left/right)`);
+  if (selects.length) badSelects.length ? fail(`${label}: selects`, badSelects.join(', ')) : pass(`${label}: selects`, `${selects.length} checked`);
 
   const newErrors = errors.slice(errBefore);
   newErrors.length ? fail(`${label}: errors`, newErrors.slice(0, 3).join(' | ')) : pass(`${label}: errors`, 'none');

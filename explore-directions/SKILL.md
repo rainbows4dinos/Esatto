@@ -107,7 +107,7 @@ A prototype deliverable is one interactive comparison artifact:
 - Mode and viewport toggles when the source has them (such as light/dark or desktop/phone), and a fit-to-screen versus actual-size control for fixed-size frames.
 - The active direction's card beside or below the prototype, followed by the comparison, recommendation, and handoff.
 
-Prototype controls need keyboard access and visible focus. Screenshots may support the brief but do not replace a working direction.
+Prototype controls need keyboard access and visible focus. Build them once from the system's component anatomy and share them across directions, as described under Controls in [prototype-contract.md](references/prototype-contract.md); only a direction whose hypothesis is about controls may restyle them. Screenshots may support the brief but do not replace a working direction.
 
 Mark up the prototype with the attributes in [prototype-contract.md](references/prototype-contract.md), then run `scripts/check-prototype.mjs` on it before publishing or handing off. It switches to every direction, runs each primary interaction, checks focus visibility and console errors, and exits non-zero on any failure. Fix failures and run it again; report anything it could not test. Run it with `--shots` before a Figma handoff to produce the reference screenshots.
 
